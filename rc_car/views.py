@@ -7,11 +7,17 @@ from .models import RC_Car
 
 def index(request):
     template_name = 'dashboard/index.html'
+
+    if not request.user.is_authenticated():
+        redirect('Home.views.index')
+
     current_user = request.user
     cars_owned = RC_Car.objects.filter(owner__id=current_user.id)
-    cars_shared = RC_Car.objects.filter(viewer_list__id=current_user.id) | RC_Car.objects.filter(user_list__id=current_user.id)
+    cars_can_drive = RC_Car.objects.filter(user_list__id=current_user.id)
+    cars_watch = RC_Car.objects.filter(viewer_list__id=current_user.id) | RC_Car.objects.filter(user_list__id=current_user.id)
     return render(request, template_name, {'rc_car_owned_list' : cars_owned,
-                                            'rc_car_shared_list': cars_shared})
+                                            'rc_car_shared_list': cars_watch,
+                                            'rc_car_can_drive_list' : cars_can_drive})
 
 
 def by_uuid(request, unique_id):
