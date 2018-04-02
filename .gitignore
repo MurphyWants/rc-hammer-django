@@ -1,3 +1,8 @@
 db.sqlite3
 rc_server/settings_secret.py
 */__pycache__/*
+static_root/
+templates/static/admin/
+*/migrations/*
+*/.Trash*
+.Trash*
