@@ -16,4 +16,18 @@
 	<p> You don't own any cars! </p>
 {% endif %}
 
+{% if rc_car_shared_list %}
+<p> Cars shared with you: </p>
+{% for rc in rc_car_shared_list %}
+<strong> {{ rc.name }} </strong>
+	<ul>
+		<li> Date Added: {{ rc.date_added }}  </li>
+    <li> Last Used: {{ rc.last_used }} </li>
+    <li> Car id: {{ rc.id }}</li>
+	</ul>
+  {% endfor %}
+{% else %}
+	<p> Nobody has shared any cars! </p>
+{% endif %}
+
 {% endblock %}
