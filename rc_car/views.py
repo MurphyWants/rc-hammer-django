@@ -9,7 +9,7 @@ def index(request):
     template_name = 'dashboard/index.html'
     current_user = request.user
     cars = RC_Car.objects.filter(owner__id=current_user.id)
-    return render(request, template_name, {'rc_car_user_list' : cars})
+    return render(request, template_name, {'rc_car_owned_list' : cars})
 
 
 def by_uuid(request, unique_id):

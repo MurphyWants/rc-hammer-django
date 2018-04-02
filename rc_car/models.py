@@ -18,7 +18,7 @@ class RC_Car(models.Model):
     user_list = models.ManyToManyField(User, related_name="user_list", blank=True)
     public_watch = models.BooleanField("Public to Watch", default='False')
     public_drive = models.BooleanField("Public to Drive", default='False')
-    password = forms.CharField(widget=forms.PasswordInput, required=False)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
 
     def __str__(self):
         return self.name

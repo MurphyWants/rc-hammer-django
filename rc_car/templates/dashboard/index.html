@@ -2,14 +2,18 @@
 
 {% block content %}
 
-{% if rc_car_user_list %}
+{% if rc_car_owned_list %}
+<p> Cars you own: </p>
+{% for rc in rc_car_owned_list %}
+<strong> {{ rc.name }} </strong>
 	<ul>
-	{% for rc in rc_car_user_list %}
-		<li> <a href=""> {{ rc.name }} </a></li>
-	{% endfor %}
+		<li> Date Added: {{ rc.date_added }}  </li>
+    <li> Last Used: {{ rc.last_used }} </li>
+    <li> Car id: {{ rc.id }}</li>
 	</ul>
+  {% endfor %}
 {% else %}
-	<p>No Cars are availible.</p>
+	<p> You don't own any cars! </p>
 {% endif %}
 
 {% endblock %}
