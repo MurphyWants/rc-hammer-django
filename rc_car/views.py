@@ -8,7 +8,7 @@ from .models import RC_Car
 def index(request):
     template_name = 'dashboard/index.html'
 
-    if not request.user.is_authenticated():
+    if request.user.is_authenticated():
         redirect('Home.views.index')
 
     current_user = request.user
