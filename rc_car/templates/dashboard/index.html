@@ -5,7 +5,7 @@
 {% if rc_car_owned_list %}
 <p> Cars you own: </p>
 {% for rc in rc_car_owned_list %}
-<strong> {{ rc.name }} </strong>
+<strong> <a href="/dashboard/rc/ {{ rc.id }}"> {{ rc.name }} </a> </strong>
 	<ul>
 		<li> Date Added: {{ rc.date_added }}  </li>
     <li> Last Used: {{ rc.last_used }} </li>

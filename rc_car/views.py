@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import RC_Car
 
@@ -15,4 +15,22 @@ def index(request):
 
 
 def by_uuid(request, unique_id):
-    return 0
+    template_name = 'rc/by_uuid.html'
+    try:
+        rc_car = RC_Car.objects.get(pk=unique_id)
+    except RC_Car.DoesNotExist:
+        return redirect(request.get_full_path())
+
+    current_user = request.user
+    car_owner = rc_car.owner
+
+    if (current_user.id == car_owner.id):
+        return render(request, template_name, {'rc' : rc_car, 'car_owner' : True})
+
+    if (current_user in rc_car.user_list.all()):
+        return render(request, template_name, {'rc' : rc_car, 'car_user' : True})
+
+    if (current_user in rc_car.viewer_list.all()):
+        return render(request, template_name, {'rc' : rc_car, 'car_viewer' : True})
+
+    return redirect(request.get_full_path())

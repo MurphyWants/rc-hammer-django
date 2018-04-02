@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<strong> Currently viewing: {{ rc.name }} </strong>
+<ul>
+		<li> Date Added: {{ rc.date_added }}  </li>
+    <li> Last Used: {{ rc.last_used }} </li>
+    <li> Car id: {{ rc.id }}</li>
+</ul>
+
+{% if car_owner %}
+
+<p> You are the car owner </p>
+
+{% endif %}
+
+{% if car_viewer %}
+
+<p> This car was shared and you can watch </p>
+
+{% endif %}
+
+{% if car_user %}
+
+<p> This car was shared and you can drive </p>
+
+{% endif %}
+
+{% endblock %}
