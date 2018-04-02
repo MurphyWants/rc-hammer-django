@@ -56,6 +56,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'rc_car_channels.routing.channel_routing',
+    }
+}
+
 ROOT_URLCONF = 'rc_server.urls'
 
 MASTER_BASE_DIR = os.path.dirname(__file__)
