@@ -9,10 +9,10 @@ app_name = 'home'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path(r'login', auth_views.login),
-    path(r'logout', auth_views.logout),
-    path(r'Login', auth_views.login),
-    path(r'Logout', auth_views.logout),
-    path(r'register', views.register, name='register'),
-    path(r'Register', views.register, name='Register'),
+    path(r'login$', auth_views.login),
+    path(r'logout$', auth_views.logout),
+    path(r'Login$', auth_views.login),
+    path(r'Logout$', auth_views.logout),
+    path(r'register$', views.register, name='register'),
+    path(r'Register$', views.register, name='Register'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_URL)
