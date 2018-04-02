@@ -8,9 +8,6 @@ from .models import RC_Car
 def index(request):
     template_name = 'dashboard/index.html'
 
-    if request.user == False:
-        redirect('Home.views.index')
-
     current_user = request.user
     cars_owned = RC_Car.objects.filter(owner__id=current_user.id)
     cars_can_drive = RC_Car.objects.filter(user_list__id=current_user.id)
