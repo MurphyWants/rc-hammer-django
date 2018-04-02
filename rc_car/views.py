@@ -4,7 +4,7 @@ from .models import RC_Car
 
 # Create your views here.
 
-
+@login_required
 def index(request):
     template_name = 'dashboard/index.html'
 
@@ -16,7 +16,7 @@ def index(request):
                                             'rc_car_shared_list': cars_watch,
                                             'rc_car_can_drive_list' : cars_can_drive})
 
-
+@login_required
 def by_uuid(request, unique_id):
     template_name = 'rc/by_uuid.html'
     try:
