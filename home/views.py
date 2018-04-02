@@ -26,4 +26,4 @@ def register(request):
     args.update(csrf(request))
     args['form'] = MyRegistrationForm()
     print(args)
-    return render(request, 'register.html', args)
+    return render(request, 'home/register.html', args)
