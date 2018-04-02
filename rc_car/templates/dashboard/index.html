@@ -2,6 +2,14 @@
 
 {% block content %}
 
-<p> dashboard </p>
+{% if rc_car_user_list %}
+	<ul>
+	{% for rc in rc_car_user_list %}
+		<li> <a href=""> {{ rc.name }} </a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No Cars are availible.</p>
+{% endif %}
 
 {% endblock %}
