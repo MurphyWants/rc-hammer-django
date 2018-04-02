@@ -142,5 +142,6 @@ STATICFILES_DIRS = ('templates/bootstrap_dark', 'templates/static/')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard'
+LOGIN_URL = '/login'
 LOGOUT_REDIRECT_URL = '/'
