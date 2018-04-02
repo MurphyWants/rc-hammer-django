@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path(r'polls/', include('polls.urls')),
     path(r'admin/', admin.site.urls),
     path(r'', include('home.urls')),
     path(r'dashboard/', include('rc_car.urls'))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
