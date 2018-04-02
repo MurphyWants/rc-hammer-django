@@ -129,7 +129,8 @@ USE_TZ = True
 
 STATICFILES_DIRS = ('templates/bootstrap_dark', 'templates/static/')
 
-STATIC_URL = 'templates/static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
