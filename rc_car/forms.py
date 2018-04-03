@@ -27,7 +27,7 @@ class Edit_Car(forms.ModelForm):
         exclude = ('date_added', 'last_used', 'id', 'viewer_list', 'user_list', 'owner')
 
     def save(self, commit=True):
-        car = super(New_Car, self).save(commit=False)
+        car = super(Edit_Car, self).save(commit=False)
         car.name = self.cleaned_data['name']
 
         if commit:
