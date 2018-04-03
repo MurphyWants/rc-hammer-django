@@ -20,6 +20,8 @@ def register(request):
     if request.method == 'POST':
         form = MyRegistrationForm(request.POST)     # create form object
         if form.is_valid():
+            form.save(commit=False)
+            form.owner = request.user
             form.save()
             return HttpResponseRedirect('/')
     args = {}

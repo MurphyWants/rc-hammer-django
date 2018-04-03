@@ -6,3 +6,4 @@ class New_Car(forms.ModelForm):
     class Meta:
         model = RC_Car
         fields = ('name',)
+        exclude = ('owner',)
