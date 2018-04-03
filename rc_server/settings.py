@@ -56,13 +56,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'asgi_redis.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [('localhost', 6379)],
+            'hosts': [(redis_host, 6379)],
         },
-        'ROUTING': 'rc_car_channels.routing.channel_routing',
+        'ROUTING': 'rc_car.routing.channel_routing',
     }
 }
 
