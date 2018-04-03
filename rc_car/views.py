@@ -45,9 +45,9 @@ def by_uuid(request, unique_id):
 def new_car(request):
     if request.method == 'POST':
         form = New_Car_Form(request.POST)
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect('/dashboard')
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/dashboard')
     args={}
     args.update(csrf(request))
     args['form'] = New_Car_Form()
