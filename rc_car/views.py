@@ -59,6 +59,7 @@ def new_car(request):
 @login_required(login_url="/login")
 def edit_car(request, unique_id):
     rc_car = RC_Car.objects.get(pk=unique_id)
+    rc_car_dictionary = rc_car.vlaues()[0]
     if(request.user == rc_car.owner):
         if request.method == 'POST':
             form = Edit_Car(request.POST, instance=rc_car)
@@ -66,7 +67,7 @@ def edit_car(request, unique_id):
                 form.save()
                 return HttpResponseRedirect('/dashboard/' + str(unique_id))
         args = {}
-        args['form'] = Edit_Car(request.POST, instance=rc_car)
+        args['form'] = Edit_Car(request.POST, instance=rc_car, initial=rc_car_dictionary)
         print(args)
         return render(request, 'rc/edit_car.html', args)
     else:
