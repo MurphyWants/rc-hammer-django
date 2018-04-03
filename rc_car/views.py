@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
+from .forms import New_Car as New_Car_Form
 from .models import RC_Car
+from django.template.context_processors import csrf
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 
@@ -38,3 +40,16 @@ def by_uuid(request, unique_id):
         return render(request, template_name, {'rc' : rc_car, 'car_viewer' : True})
 
     return redirect(request.get_full_path())
+
+@login_required(login_url="/login")
+def new_car(request):
+    if request.method == 'POST':
+        form = New_Car_Form(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/dashboard')
+    args={}
+    args.update(csrf(request))
+    args['form'] = New_Car_Form()
+    print(args)
+    return render(request, 'rc/new_car.html', args)

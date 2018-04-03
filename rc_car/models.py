@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 import uuid
 
@@ -11,12 +12,12 @@ class RC_Car(models.Model):
     owner = models.ForeignKey(User,
                             related_name="Car_Owner",
                             on_delete=models.CASCADE,)
-    date_added = models.DateTimeField()
-    last_used = models.DateTimeField()
+    date_added = models.DateTimeField(default=datetime.now)
+    last_used = models.DateTimeField(default=datetime.now)
     viewer_list = models.ManyToManyField(User, related_name="viewer_list", blank=True)
     user_list = models.ManyToManyField(User, related_name="user_list", blank=True)
-    public_watch = models.BooleanField("Public to Watch", default='False')
-    public_drive = models.BooleanField("Public to Drive", default='False')
+    public_watch = models.BooleanField("Public to Watch", default=False)
+    public_drive = models.BooleanField("Public to Drive", default=False)
 
     def __str__(self):
         return self.name
