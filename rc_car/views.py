@@ -60,7 +60,7 @@ def new_car(request):
 def edit_car(request, unique_id):
     rc_car = RC_Car.objects.get(pk=unique_id)
     rc_car_dictionary = RC_Car.objects.filter(pk=unique_id).values()[0]
-    print(rc_car_dictionary)
+    print("Car dictionary: ", rc_car_dictionary)
     if(request.user == rc_car.owner):
         if request.method == 'POST':
             form = Edit_Car(request.POST, instance=rc_car, initial={'name':rc_car.name,})
