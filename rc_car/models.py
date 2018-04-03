@@ -11,7 +11,7 @@ class RC_Car(models.Model):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     owner = models.ForeignKey(User,
                             related_name="Car_Owner",
-                            on_delete=models.CASCADE,null=True)
+                            on_delete=models.CASCADE)
     date_added = models.DateTimeField(default=datetime.now)
     last_used = models.DateTimeField(default=datetime.now)
     viewer_list = models.ManyToManyField(User, related_name="viewer_list", blank=True, null=True)
