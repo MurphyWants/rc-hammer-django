@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    ]
+    'channels',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-'''redis_host = os.environ.get('REDIS_HOST', 'localhost')
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
 
 CHANNEL_LAYERS = {
     'default': {
@@ -65,7 +66,7 @@ CHANNEL_LAYERS = {
         },
         'ROUTING': 'rc_car.routing.channel_routing',
     }
-}'''
+}
 
 ROOT_URLCONF = 'rc_server.urls'
 
