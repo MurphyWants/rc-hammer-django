@@ -39,7 +39,7 @@ def by_uuid(request, unique_id):
     if (current_user in rc_car.viewer_list.all()):
         return render(request, template_name, {'rc' : rc_car, 'car_viewer' : True})
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
 
 @login_required(login_url="/login")
 def new_car(request):
@@ -59,12 +59,15 @@ def new_car(request):
 @login_required(login_url="/login")
 def edit_car(request, unique_id):
     rc_car = RC_Car.objects.get(pk=unique_id)
-    if request.method == 'POST':
-        form = Edit_Car(request.POST, instance=rc_car)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/dashboard/' + str(unique_id))
-    args = {}
-    args['form'] = Edit_Car(request.POST, instance=rc_car)
-    print(args)
-    return render(request, 'rc/'+str(unique_id)+'/edit/', args)
+    if(request.user == rc_car.owner):
+        if request.method == 'POST':
+            form = Edit_Car(request.POST, instance=rc_car)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/dashboard/' + str(unique_id))
+        args = {}
+        args['form'] = Edit_Car(request.POST, instance=rc_car)
+        print(args)
+        return render(request, 'rc/'+str(unique_id)+'/edit/', args)
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
