@@ -39,7 +39,7 @@ def by_uuid(request, unique_id):
     if (current_user in rc_car.viewer_list.all()):
         return render(request, template_name, {'rc' : rc_car, 'car_viewer' : True})
 
-    return redirect(request.get_full_path())
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 @login_required(login_url="/login")
 def new_car(request):
