@@ -21,10 +21,12 @@ class New_Car(forms.ModelForm):
 
 class Edit_Car(forms.ModelForm):
 
+    name = forms.CharField(initial='class')
+
     class Meta:
         model = RC_Car
-        fields = ('name', 'owner', 'viewer_list', 'user_list', 'public_watch', 'public_drive')
-        exclude = ('date_added', 'last_used', 'id')
+        fields = ('name', 'owner', 'public_watch', 'public_drive')
+        exclude = ('date_added', 'last_used', 'id', 'viewer_list', 'user_list')
 
     def save(self, commit=True):
         car = super(New_Car, self).save(commit=False)
