@@ -35,7 +35,7 @@ class Edit_Car(forms.ModelForm):
 
         return car
 
-    def __init__(self, *awgs, **kwargs):
+    def __init__(self, *args, **kwargs):
         '''
         https://stackoverflow.com/questions/22847281/setting-initial-values-in-form-meta-class
         '''
