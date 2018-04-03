@@ -49,7 +49,7 @@ def new_car(request):
             obj = form.save(commit=False)
             obj.owner = request.user
             obj.save()
-            return HttpResponseRedirect('/dashboard')
+            return HttpResponseRedirect('/dashboard/rc/'+str(obj.id))
     args={}
     args.update(csrf(request))
     args['form'] = New_Car_Form()
