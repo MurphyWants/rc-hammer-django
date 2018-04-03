@@ -25,6 +25,7 @@ class Edit_Car(forms.ModelForm):
         model = RC_Car
         fields = ('name', 'public_watch', 'public_drive', 'user_list', 'viewer_list', 'owner')
         exclude = ('date_added', 'last_used', 'id')
+        help_texts = {'owner': 'This changes who has ownership over the car. Be sure you really want to do this.',}
 
     def save(self, commit=True):
         car = super(Edit_Car, self).save(commit=False)
