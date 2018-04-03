@@ -21,12 +21,10 @@ class New_Car(forms.ModelForm):
 
 class Edit_Car(forms.ModelForm):
 
-    name = forms.CharField(initial='class')
-
     class Meta:
         model = RC_Car
-        fields = ('name', 'owner', 'public_watch', 'public_drive')
-        exclude = ('date_added', 'last_used', 'id', 'viewer_list', 'user_list')
+        fields = ('name', 'public_watch', 'public_drive')
+        exclude = ('date_added', 'last_used', 'id', 'viewer_list', 'user_list', 'owner')
 
     def save(self, commit=True):
         car = super(New_Car, self).save(commit=False)
@@ -36,3 +34,12 @@ class Edit_Car(forms.ModelForm):
             car.save()
 
         return car
+
+    def __init__(self, *awgs, **kwargs):
+        '''
+        https://stackoverflow.com/questions/22847281/setting-initial-values-in-form-meta-class
+        '''
+        initial = kwargs.get('initial', {})
+        initial['name'] = 'initial_name'
+        kwargs['initial'] = initial
+        super(Edit_Car, self).__init__(*args, **kwargs)
