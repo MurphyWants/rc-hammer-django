@@ -11,8 +11,8 @@ class RC_Car(models.Model):
     owner = models.ForeignKey(User,
                             related_name="Car_Owner",
                             on_delete=models.CASCADE,)
-    date_added = models.DateField()
-    last_used = models.DateField()
+    date_added = models.DateTimeField()
+    last_used = models.DateTimeField()
     viewer_list = models.ManyToManyField(User, related_name="viewer_list", blank=True)
     user_list = models.ManyToManyField(User, related_name="user_list", blank=True)
     public_watch = models.BooleanField("Public to Watch", default='False')
