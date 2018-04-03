@@ -63,7 +63,7 @@ def edit_car(request, unique_id):
         form = Edit_Car(request.POST, instance=rc_car)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/dashboard/' + unique_id')
+            return HttpResponseRedirect('/dashboard/' + unique_id)
     args = {}
     args['form'] = Edit_Car(request.POST, instance=rc_car)
     print(args)
