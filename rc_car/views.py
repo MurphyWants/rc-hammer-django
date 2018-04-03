@@ -4,6 +4,7 @@ from .forms import New_Car as New_Car_Form, Edit_Car
 from .models import RC_Car
 from django.template.context_processors import csrf
 from django.http import HttpResponse, HttpResponseRedirect
+from django.forms.models import model_to_dict
 
 # Create your views here.
 
@@ -63,12 +64,12 @@ def edit_car(request, unique_id):
     print("Car dictionary: ", rc_car_dictionary)
     if(request.user == rc_car.owner):
         if request.method == 'POST':
-            form = Edit_Car(request.POST, instance=rc_car, initial={'name':rc_car.name,})
+            form = Edit_Car(request.POST, instance=rc_car)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect('/dashboard/rc/' + str(unique_id))
         args = {}
-        args['form'] = Edit_Car(request.POST, instance=rc_car, initial=rc_car_dictionary)
+        args['form'] = Edit_Car(initial=model_to_dict(rc_car))
         print(args)
         return render(request, 'rc/edit_car.html', args)
     else:
