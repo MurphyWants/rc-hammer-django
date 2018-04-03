@@ -59,7 +59,7 @@ def new_car(request):
 @login_required(login_url="/login")
 def edit_car(request, unique_id):
     rc_car = RC_Car.objects.get(pk=unique_id)
-    rc_car_dictionary = rc_car.vlaues()[0]
+    rc_car_dictionary = rc_car.values()[0]
     if(request.user == rc_car.owner):
         if request.method == 'POST':
             form = Edit_Car(request.POST, instance=rc_car)
