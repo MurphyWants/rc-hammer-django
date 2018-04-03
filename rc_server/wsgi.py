@@ -16,11 +16,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rc_server.settings")
 
 application = get_wsgi_application()
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
-os.environ['DJANGO_SETTINGS_MODULE'] = 'rc_server.settings'
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rc_server  .settings")
-
+path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if path not in sys.path:
+    sys.path.append(path)
 '''
 https://stackoverflow.com/questions/36210686/importerror-no-module-named-mysite-settings-django/36211423
 
