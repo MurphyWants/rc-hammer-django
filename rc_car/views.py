@@ -61,7 +61,7 @@ def edit_car(request, unique_id):
     rc_car = RC_Car.objects.get(pk=unique_id)
     if request.method == 'POST':
         form = Edit_Car(request.POST, instance=rc_car)
-        if form.is_valid()
+        if form.is_valid():
             form.save()
             return HttpResponseRedirect('/dashboard/' + unique_id')
     args = {}
