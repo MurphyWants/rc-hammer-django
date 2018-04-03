@@ -46,9 +46,9 @@ def new_car(request):
     if request.method == 'POST':
         form = New_Car_Form(request.POST)
         if form.is_valid():
-            form.save(commit=False)
-            form.owner = request.user
-            form.save()
+            obj = form.save(commit=False)
+            obj.owner = request.user
+            obj.save()
             return HttpResponseRedirect('/dashboard')
     args={}
     args.update(csrf(request))
