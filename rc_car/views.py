@@ -62,7 +62,7 @@ def edit_car(request, unique_id):
     rc_car_dictionary = RC_Car.objects.filter(pk=unique_id).values()[0]
     if(request.user == rc_car.owner):
         if request.method == 'POST':
-            form = Edit_Car(request.POST, instance=rc_car)
+            form = Edit_Car(request.POST, instance=rc_car, initial=rc_car_dictionary)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect('/dashboard/rc/' + str(unique_id))
