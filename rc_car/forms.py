@@ -23,8 +23,8 @@ class Edit_Car(forms.ModelForm):
 
     class Meta:
         model = RC_Car
-        fields = ('name', 'public_watch', 'public_drive')
-        exclude = ('date_added', 'last_used', 'id', 'viewer_list', 'user_list', 'owner')
+        fields = ('name', 'public_watch', 'public_drive', 'user_list', 'owner')
+        exclude = ('date_added', 'last_used', 'id', 'viewer_list')
 
     def save(self, commit=True):
         car = super(Edit_Car, self).save(commit=False)
