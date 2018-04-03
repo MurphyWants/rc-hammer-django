@@ -68,6 +68,6 @@ def edit_car(request, unique_id):
         args = {}
         args['form'] = Edit_Car(request.POST, instance=rc_car)
         print(args)
-        return render(request, 'rc/'+str(unique_id)+'/edit/', args)
+        return render(request, 'rc/edit_car.html', args)
     else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
