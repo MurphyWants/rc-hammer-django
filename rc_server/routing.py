@@ -1,16 +1,14 @@
-from channels.routing import route
-from rc_car.consumers import ws_connect, ws_disconenct, ws_recieve
+from channels import route
 
-'''channel_routing = [
-    route('websocket.connect', ws_connect),
-    route('websocket.recieve', ws_recieve),
-    route('websocket.disconnect', ws_disconnect),
-]'''
-
-
+# This function will display all messages received in the console
 def message_handler(message):
     print(message['text'])
 
+
 channel_routing = [
-    route('websocket.recieve', message_handler)
+    route("websocket.receive", message_handler)  # we register our message handler
 ]
+
+'''
+https://gearheart.io/blog/creating-a-chat-with-django-channels/
+'''
