@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import New_Car as New_Car_Form
+from .forms import New_Car as New_Car_Form, Edit_Car
 from .models import RC_Car
 from django.template.context_processors import csrf
 from django.http import HttpResponse, HttpResponseRedirect
@@ -55,3 +55,16 @@ def new_car(request):
     args['form'] = New_Car_Form()
     print(args)
     return render(request, 'rc/new_car.html', args)
+
+@login_required(login_url="/login")
+def edit_car(request, unique_id):
+    rc_car = RC_Car.objects.get(pk=unique_id)
+    if request.method == 'POST':
+        form = Edit_Car(request.POST, instance=rc_car)
+        if form.is_valid()
+            form.save()
+            return HttpResponseRedirect('/dashboard/' + unique_id')
+    args = {}
+    args['form'] = Edit_Car(request.POST, instance=rc_car)
+    print(args)
+    return render(request, 'rc/'+unique_id+'/edit/', args)

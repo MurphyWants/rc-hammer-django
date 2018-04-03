@@ -18,3 +18,19 @@ class New_Car(forms.ModelForm):
             car.save()
 
         return car
+
+class Edit_Car(forms.ModelForm):
+
+    class Meta:
+        model = RC_Car
+        fields = ('name', 'owner', 'viewer_list', 'user_list', 'public_watch', 'public_drive')
+        exclude = ('date_added', 'last_used', 'id')
+
+    def save(self, commit=True):
+        car = super(New_Car, self).save(commit=False)
+        car.name = self.cleaned_data['name']
+
+        if commit:
+            car.save()
+
+        return car
