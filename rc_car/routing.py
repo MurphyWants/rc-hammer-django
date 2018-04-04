@@ -11,4 +11,5 @@ channel_routing = [
 
 '''
 https://gearheart.io/blog/creating-a-chat-with-django-channels/
+https://codyparker.com/django-channels-with-react/2/
 '''
