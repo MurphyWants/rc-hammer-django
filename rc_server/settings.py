@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ASGI_APPLICATION = "rccar.routing.application"
+ASGI_APPLICATION = "rc_car.routing.application"
 
 redis_host = os.environ.get('REDIS_HOST', 'localhost')
 
