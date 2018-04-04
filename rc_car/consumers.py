@@ -1,12 +1,13 @@
-from channels import Group
-from channels.auth import channel_session_user
+from channels.generic.websocket import WebsocketConsumer
+import json
 
-@channel_session_user
-def ws_connect(message):
-    return 0
+class Car_Consumer(WebsocketConsumer):
+    def connect(self):
+        self.accept()
 
-def ws_disconnect(message):
-    return 0
+    def disconnect(self, close_code):
+        pass
 
-def ws_recieve(message):
-    return 0
+    def receive(self, text_data):
+        message = text_data_json['message']
+        print("Message: ", message)

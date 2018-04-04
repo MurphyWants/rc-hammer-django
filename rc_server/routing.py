@@ -1,28 +1,21 @@
-'''from channels import route
-
-# This function will display all messages received in the console
-def message_handler(message):
-    print(message['text'])
-
-
-channel_routing = [
-    route("websocket.receive", message_handler)  # we register our message handler
-]'''
+from channels import route
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
+import rc_car.routing
 
 '''
 https://gearheart.io/blog/creating-a-chat-with-django-channels/
 https://codyparker.com/django-channels-with-react/2/
 '''
 
-
-def message_handler(message):
-    print(message['text'])
-
 # mysite/routing.py
 # http://channels.readthedocs.io/en/latest/tutorial/part_1.html
-from channels.routing import ProtocolTypeRouter
 
 application = ProtocolTypeRouter({
     # (http->django views is added by default)
-    "websocket" : message_handler,
+    'websocket' : AuthMiddlewareStack(
+        URLRouter{
+            rc_car.routing.websocket_urlpatterns
+        }
+    )
 })
