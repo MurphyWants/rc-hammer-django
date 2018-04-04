@@ -14,8 +14,8 @@ https://codyparker.com/django-channels-with-react/2/
 application = ProtocolTypeRouter({
     # (http->django views is added by default)
     'websocket' : AuthMiddlewareStack(
-        URLRouter{
+        URLRouter(
             rc_car.routing.websocket_urlpatterns
-        }
+        )
     )
 })
