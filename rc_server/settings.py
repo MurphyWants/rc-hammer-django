@@ -34,6 +34,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'chat',
     'polls.apps.PollsConfig',
     'home.apps.HomeConfig',
     'rc_car.apps.RcCarConfig',
