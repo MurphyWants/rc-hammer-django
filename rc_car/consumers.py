@@ -9,5 +9,6 @@ class Car_Consumer(WebsocketConsumer):
         pass
 
     def receive(self, text_data):
+        text_data_json = json.loads(text_data)
         message = text_data_json['message']
         print("Message: ", message)
