@@ -43,7 +43,7 @@
 
 <script>
 
-var roomName = string({{ rc.id }});
+var roomName = string({{ room_id }});
 
 var control_socket = new WebSocket(
 	'ws://' + window.location.host + '/ws/chat/' + roomName + '/');
