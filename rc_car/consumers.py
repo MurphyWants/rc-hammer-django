@@ -41,8 +41,8 @@ class Drive_Consumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        drive_direction = text_data_json['Direction']
-        scale = text_data_json['Scale']
+        drive_direction = text_data_json['drive']
+        scale = text_data_json['scale']
 
         await self.channel_layer.group_send(
             self.room_group_name,
