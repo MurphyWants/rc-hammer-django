@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="Information">
 <strong> Currently viewing: {{ rc.name }} </strong>
 <ul>
 		<li> Date Added: {{ rc.date_added }}  </li>
@@ -26,5 +26,46 @@
 <p> This car was shared and you can drive </p>
 
 {% endif %}
+</div>
+
+<div class="RC_Controls">
+
+<input type="range" min="1" max="100" value="100" class="rc_scale" id="rc_scale">
+
+</br>
+
+<input id="rc_left" type="button" value="Left"/>
+<input id="rc_forward" type="button" value="Forward"/>
+<input id="rc_reverse" type="button" value="Reverse"/>
+<input id="rc_right" type="button" value="Right"/>
+
+</br>
+
+<script>
+
+var roomName = {{ rc.id }};
+
+var control_socket = new WebSocket(
+	'ws://' + window.location.host + '/ws/chat/' + roomName);
+
+control_socket.onmessage = function(e){
+	var we_do_nothing_here = e;
+};
+
+control_socket.onclose = function(e){
+	console.error('Error: socket closed');
+};
+
+document.querySelector('#rc_left').onclick = function(e){
+	var scale = document.querySelector('#rc_scale').value;
+	control_socket.send(JSON.stringify({
+		'drive': 'left',
+		'scale': scale,
+	}))
+};
+
+</script>
+
+</div>
 
 {% endblock %}

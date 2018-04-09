@@ -12,14 +12,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 from .settings_secret import *
 
-'''
-Inside settings_secret:
-
-SECRET_KEY = '<Key here>'
-
-ALLOWED_HOSTS = ['<DOMAIN>', '0.0.0.0']
-'''
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
