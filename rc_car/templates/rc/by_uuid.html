@@ -46,7 +46,7 @@
 var roomName = "{{ rc_car.id }}";
 
 var control_socket = new WebSocket(
-	'ws://' + window.location.host + '/ws/chat/' + roomName + '/');
+	'ws://' + window.location.host + '/ws/' + roomName + '/control/');
 
 control_socket.onmessage = function(e){
 	var we_do_nothing_here = e;
