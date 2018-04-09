@@ -32,7 +32,7 @@ def by_uuid(request, unique_id):
     car_owner = rc_car.owner
 
     if (current_user.id == car_owner.id):
-        return render(request, template_name, {'rc' : rc_car, 'car_owner' : True, 'room_id': rc_car.id})
+        return render(request, template_name, {'rc' : rc_car, 'car_owner' : True,})
 
     if (current_user in rc_car.user_list.all()):
         return render(request, template_name, {'rc' : rc_car, 'car_user' : True})
