@@ -102,7 +102,26 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
         )
 
     async def receive(self, text_data):
-        self.helper_inuse(self.room_name)
+        rc_car = RC_Car.objects.get(pk=car_id)
+        current_user = rc_car.current_user
+        minutes_idle = 5
+        '''
+            If i get time, come back to this
+            TODO
+        '''
+
+        if current_user == None:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'in_use' : False
+                }, immediately=True)
+        else:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'in_use' : True
+                }, immediately=True)
 
     async def user_data(self, event):
         in_use = event['in_use']
