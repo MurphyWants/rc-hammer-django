@@ -102,7 +102,7 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
         )
 
     async def receive(self, text_data):
-        rc_car = RC_Car.objects.get(pk=car_id)
+        rc_car = RC_Car.objects.get(pk=self.room_name)
         current_user = rc_car.current_user
         minutes_idle = 5
         '''
