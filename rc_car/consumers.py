@@ -114,14 +114,16 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
+                    'type': 'user_data',
                     'in_use' : False
-                }, immediately=True)
+                })
         else:
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
+                    'type': 'user_data',
                     'in_use' : True
-                }, immediately=True)
+                })
 
     async def user_data(self, event):
         in_use = event['in_use']
@@ -145,11 +147,13 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
+                    'type': 'user_data',
                     'in_use' : False
                 }, immediately=True)
         else:
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
+                    'type': 'user_data',
                     'in_use' : True
                 }, immediately=True)
