@@ -32,8 +32,8 @@
 
 <form>
 
-<input type="range" min="1" max="100" value="100" class="rc_scale" id="rc_scale" name="range-input" oninput="this.form.text-input.value=this.value"  />
-<input type="text" id="textInput" value="100" name="text-input" oninput="this.form.range-input.value=this.value" />
+<input type="range" min="1" max="100" value="100" class="rc_scale" id="rc_scale" name="range-input" onchange="this.form.text-input.value=this.value"  />
+<input type="text" id="textInput" value="100" name="text-input" onchange=""="this.form.range-input.value=this.value" />
 
 </form>
 
@@ -80,10 +80,18 @@ document.querySelector('#rc_right').onclick = function(e){
 	}))
 };
 
-document.querySelector('#rc_left').onclick = function(e){
+document.querySelector('#rc_forward').onclick = function(e){
 	var scale = document.querySelector('#rc_scale').value;
 	control_socket.send(JSON.stringify({
-		'drive': 'left',
+		'drive': 'forward',
+		'scale': scale,
+	}))
+};
+
+document.querySelector('#rc_reverse').onclick = function(e){
+	var scale = document.querySelector('#rc_scale').value;
+	control_socket.send(JSON.stringify({
+		'drive': 'reverse',
 		'scale': scale,
 	}))
 };
