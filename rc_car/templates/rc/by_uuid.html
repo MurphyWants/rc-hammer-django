@@ -30,7 +30,15 @@
 
 <div class="RC_Controls">
 
-<input type="range" min="1" max="100" value="100" class="rc_scale" id="rc_scale">
+<form>
+
+<input type="range" min="1" max="100" value="100" class="rc_scale" id="rc_scale" name="range-input" oninput="this.form.text-input.value=this.value"  />
+<input type="text" id="textInput" value="100" name="text-input" oninput="this.form.range-input.value=this.value" />
+
+</form>
+
+</script>
+
 
 </br>
 
@@ -54,6 +62,22 @@ control_socket.onmessage = function(e){
 
 control_socket.onclose = function(e){
 	console.error('Error: socket closed');
+};
+
+document.querySelector('#rc_left').onclick = function(e){
+	var scale = document.querySelector('#rc_scale').value;
+	control_socket.send(JSON.stringify({
+		'drive': 'left',
+		'scale': scale,
+	}))
+};
+
+document.querySelector('#rc_right').onclick = function(e){
+	var scale = document.querySelector('#rc_scale').value;
+	control_socket.send(JSON.stringify({
+		'drive': 'right',
+		'scale': scale,
+	}))
 };
 
 document.querySelector('#rc_left').onclick = function(e){
