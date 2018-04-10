@@ -32,8 +32,8 @@
 
 <form>
 
-<input type="range" min="1" max="100" value="100" class="rc_scale" id="rc_scale" name="range-input" onchange="this.form.text-input.value=this.value"  />
-<input type="text" id="textInput" value="100" name="text-input" onchange=""="this.form.range-input.value=this.value" />
+	<input type="range" name="inputRange" min="0" max="100" value="0" oninput="this.form.inputType.value=this.value" />
+	<input type="number" name="inputType" min="0" max="100" value="0" oninput="this.form.inputRange.value=this.value" />
 
 </form>
 
