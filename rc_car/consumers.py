@@ -84,7 +84,7 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
 class In_Use_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['unique_id']
-        self.room_group_name = 'rc_car%s' % self.room_name
+        self.room_group_name = 'rc_car_is_in_use%s' % self.room_name
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -92,8 +92,6 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
         )
 
         await self.accept()
-
-        self.helper_inuse(self.room_name)
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
@@ -104,26 +102,37 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
     async def receive(self, text_data):
         rc_car = RC_Car.objects.get(pk=self.room_name)
         current_user = rc_car.current_user
-        minutes_idle = 5
-        '''
-            If i get time, come back to this
-            TODO
-        '''
+        user = self.scope["user"]
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
 
-        if current_user == None:
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'user_data',
-                    'in_use' : False
-                })
-        else:
+        if (user == current_user) and (message == 'Free'):
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'user_data',
                     'in_use' : True
                 })
+        '''
+            If i get time, come back to this
+            TODO
+        '''
+        else:
+            if current_user == None:
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'user_data',
+                        'in_use' : False
+                    })
+            else:
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'user_data',
+                        'in_use' : True
+                    })
+
 
     async def user_data(self, event):
         in_use = event['in_use']
@@ -133,27 +142,3 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
             "in_use": in_use
         },
         )
-
-    async def helper_inuse(self, car_id):
-        rc_car = RC_Car.objects.get(pk=car_id)
-        current_user = rc_car.current_user
-        minutes_idle = 5
-        '''
-            If i get time, come back to this
-            TODO
-        '''
-
-        if current_user == None:
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'user_data',
-                    'in_use' : False
-                }, immediately=True)
-        else:
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'user_data',
-                    'in_use' : True
-                }, immediately=True)
