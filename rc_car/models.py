@@ -18,6 +18,10 @@ class RC_Car(models.Model):
     user_list = models.ManyToManyField(User, related_name="user_list", blank=True, null=True)
     public_watch = models.BooleanField("Public to Watch", default=False)
     public_drive = models.BooleanField("Public to Drive", default=False)
+    current_user = models.ForeignKey(User,
+                            related_name="Current_User", blank=True, null=True, default=None, on_delete=models.SET_DEFAULT, editable=False)
+    last_ping = models.DateTimeField(default=None, editable=False)
+
 
     def __str__(self):
         return self.name
