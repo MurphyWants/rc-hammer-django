@@ -57,10 +57,12 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
         drive_direction = event['drive']
         scale = event['scale']
 
-        await self.send_json({
-            'drive': drive_direction,
-            'scale': scale
-        },))
+        await self.send_json(
+        {
+            "drive": drive_direction,
+            "scale": scale,
+        },
+        )
 
 
 class Data_Consumer(AsyncWebsocketConsumer):
