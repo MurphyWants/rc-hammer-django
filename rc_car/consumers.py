@@ -53,8 +53,14 @@ class Drive_Consumer(AsyncWebsocketConsumer):
             }
         )
 
-    async def chat_message(self, event):
-        return 0
+    async def rc_drive_controls(self, event):
+        drive_direction = event['drive']
+        scale = event['scale']
+
+        await self.send(text_data=json.dump({
+            'drive': drive_direction,
+            'scale': scale
+        }))
 
 
 class Data_Consumer(AsyncWebsocketConsumer):
