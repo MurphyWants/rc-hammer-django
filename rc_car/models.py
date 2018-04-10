@@ -20,7 +20,7 @@ class RC_Car(models.Model):
     public_drive = models.BooleanField("Public to Drive", default=False)
     current_user = models.ForeignKey(User,
                             related_name="Current_User", blank=True, null=True, default=None, on_delete=models.SET_DEFAULT, editable=False)
-    last_ping = models.DateTimeField(default=None, editable=False, null=True)
+    last_ping = models.DateTimeField(default=None, editable=False, null=True, blank=True)
 
 
     def __str__(self):
