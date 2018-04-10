@@ -1,4 +1,4 @@
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer, AsyncJsonWebsocketConsumer
 import json
 
 '''
@@ -21,7 +21,7 @@ class Video_Consumer(AsyncWebsocketConsumer):
         return 0
 
 
-class Drive_Consumer(AsyncWebsocketConsumer):
+class Drive_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['unique_id']
         self.room_group_name = 'rc_car%s' % self.room_name
@@ -57,10 +57,10 @@ class Drive_Consumer(AsyncWebsocketConsumer):
         drive_direction = event['drive']
         scale = event['scale']
 
-        await self.send(text_data=json.dump({
+        await self.send_json({
             'drive': drive_direction,
             'scale': scale
-        }))
+        },))
 
 
 class Data_Consumer(AsyncWebsocketConsumer):
