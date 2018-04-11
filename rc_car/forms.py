@@ -19,6 +19,9 @@ class New_Car(forms.ModelForm):
     def save(self, commit=True):
         car = super(New_Car, self).save(commit=False)
         car.name = self.cleaned_data['name']
+        password = self.cleaned_data['password']
+
+        car.set_password(password)
 
         if commit:
             car.save()
