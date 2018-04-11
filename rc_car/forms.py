@@ -3,16 +3,16 @@ from datetime import datetime
 from .models import RC_Car
 
 class New_Car(forms.ModelForm):
-    name = forms.CharField(max_length=200, strip=True, min_length=1)
 
     class Meta:
         model = RC_Car
         fields = ('name', 'password')
-        exclude = ('owner',)
+        exclude = ('owner','username')
         help_texts = {
             'password': "Create a password to authenticate your Car!",
             }
         widgets = {
+            'name': forms.TextInput(),
             'password': forms.PasswordInput(),
         }
 
