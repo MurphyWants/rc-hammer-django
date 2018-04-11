@@ -20,6 +20,7 @@ class RC_Car(models.Model):
     public_drive = models.BooleanField("Public to Drive", default=False)
     current_user = models.ForeignKey(User,
                             related_name="Current_User", blank=True, null=True, default=None, on_delete=models.SET_DEFAULT, editable=False)
+    password = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
