@@ -66,6 +66,10 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
         current_user = rc_car.current_user
         user = self.scope["user"]
 
+        if (current_user == None):
+            rc_car.current_user = user
+            current_user = rc_car.current_user
+
         if (user == current_user):
 
             rc_car.last_ping = datetime.now()
