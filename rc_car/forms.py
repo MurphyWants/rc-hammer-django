@@ -13,7 +13,7 @@ class New_Car(forms.ModelForm):
             'password': "Create a password to authenticate your Car!",
             }
         widgets = {
-            'password': forms.PasswordInput();
+            'password': forms.PasswordInput(),
         }
 
     def save(self, commit=True):
