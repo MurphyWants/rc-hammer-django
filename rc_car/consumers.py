@@ -26,11 +26,11 @@ class Video_Consumer(AsyncJsonWebsocketConsumer):
 
 class Drive_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['unique_id']
+        self.room_group_name = 'rc_car%s' % self.room_name
         rc_car = RC_Car.objects.get(pk=self.room_name)
         current_user = rc_car.current_user
         user = self.scope["user"]
-        self.room_name = self.scope['url_route']['kwargs']['unique_id']
-        self.room_group_name = 'rc_car%s' % self.room_name
 
         if(current_user == None):
             rc_car.current_user = user
@@ -71,7 +71,7 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
             rc_car.last_ping = datetime.now()
             rc_car.last_used = datetime.now()
             rc_car.save()
-            
+
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
