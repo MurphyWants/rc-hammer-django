@@ -8,7 +8,7 @@ import uuid
 # Create your models here.
 
 class RC_Car(AbstractBaseUser):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, username)
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     owner = models.ForeignKey(User,
                             related_name="Car_Owner",
@@ -22,6 +22,8 @@ class RC_Car(AbstractBaseUser):
     current_user = models.ForeignKey(User,
                             related_name="Current_User", blank=True, null=True, default=None, on_delete=models.SET_DEFAULT, editable=False)
     password = models.CharField(max_length=200, default="", null=False)
+
+    USERNAME_FIELD = 'id'
 
     def __str__(self):
         return self.name
