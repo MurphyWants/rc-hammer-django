@@ -1,6 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer, AsyncJsonWebsocketConsumer
 import json
-import datetime
+from datetime import datetime
 from .models import RC_Car
 
 '''
@@ -26,8 +26,15 @@ class Video_Consumer(AsyncJsonWebsocketConsumer):
 
 class Drive_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
+        rc_car = RC_Car.objects.get(pk=self.room_name)
+        current_user = rc_car.current_user
+        user = self.scope["user"]
         self.room_name = self.scope['url_route']['kwargs']['unique_id']
         self.room_group_name = 'rc_car%s' % self.room_name
+
+        if(current_user == None):
+            rc_car.current_user = user
+            rc_car.save()
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -37,6 +44,14 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
+        rc_car = RC_Car.objects.get(pk=self.room_name)
+        current_user = rc_car.current_user
+        user = self.scope["user"]
+
+        if(current_user == user):
+            rc_car.current_user = None
+            rc_car.save()
+
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
@@ -47,14 +62,24 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
         drive_direction = text_data_json['drive']
         scale = text_data_json['scale']
 
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'rc_drive_controls',
-                'drive': drive_direction,
-                'scale': scale,
-            }
-        )
+        rc_car = RC_Car.objects.get(pk=self.room_name)
+        current_user = rc_car.current_user
+        user = self.scope["user"]
+
+        if (user == current_user):
+
+            rc_car.last_ping = datetime.now()
+            rc_car.last_used = datetime.now()
+            rc_car.save()
+            
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'rc_drive_controls',
+                    'drive': drive_direction,
+                    'scale': scale,
+                }
+            )
 
     async def rc_drive_controls(self, event):
         drive_direction = event['drive']
@@ -106,17 +131,6 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
 
-        if (user == current_user) and (message == 'Free'):
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'user_data',
-                    'in_use' : True
-                })
-        '''
-            If i get time, come back to this
-            TODO
-        '''
         if current_user == None:
             await self.channel_layer.group_send(
                 self.room_group_name,
