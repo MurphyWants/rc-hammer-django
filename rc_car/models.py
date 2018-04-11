@@ -6,7 +6,7 @@ import uuid
 
 # Create your models here.
 
-class RC_Car(models.Model):
+class RC_Car(models.Model, AbstractBaseUser):
     name = models.CharField(max_length=200)
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
     owner = models.ForeignKey(User,
