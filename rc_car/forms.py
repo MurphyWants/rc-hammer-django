@@ -37,12 +37,3 @@ class Edit_Car(forms.ModelForm):
         help_texts = {
             'owner': 'This changes who has ownership over the car. Be sure you really want to do this.',
         }
-
-    def save(self, commit=True):
-        car = super(Edit_Car, self).save(commit=False)
-        car.name = self.cleaned_data['name']
-
-        if commit:
-            car.save()
-
-        return car
