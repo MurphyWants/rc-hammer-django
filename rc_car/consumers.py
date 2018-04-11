@@ -117,21 +117,20 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
             If i get time, come back to this
             TODO
         '''
+        if current_user == None:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'user_data',
+                    'in_use' : False
+                })
         else:
-            if current_user == None:
-                await self.channel_layer.group_send(
-                    self.room_group_name,
-                    {
-                        'type': 'user_data',
-                        'in_use' : False
-                    })
-            else:
-                await self.channel_layer.group_send(
-                    self.room_group_name,
-                    {
-                        'type': 'user_data',
-                        'in_use' : True
-                    })
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'user_data',
+                    'in_use' : True
+                })
 
 
     async def user_data(self, event):
