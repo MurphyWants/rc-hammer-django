@@ -140,6 +140,8 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
                 self.room_group_name,
                 {
                     'type': 'user_data',
+                    'current_user': "None",
+                    'user': "None",
                     'in_use' : False
                 })
         else:
@@ -147,15 +149,21 @@ class In_Use_Consumer(AsyncJsonWebsocketConsumer):
                 self.room_group_name,
                 {
                     'type': 'user_data',
+                    'current_user': current_user.id,
+                    'user': user.id,
                     'in_use' : True
                 })
 
 
     async def user_data(self, event):
         in_use = event['in_use']
+        current_user = event['current_user']
+        user = event['user']
 
         await self.send_json(
         {
+            "current_user": current_user,
+            "you": user,
             "in_use": in_use
         },
         )
