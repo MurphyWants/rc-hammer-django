@@ -48,8 +48,7 @@ class Change_Password(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        car = super(New_Car, self).save(commit=False)
-        car.name = self.cleaned_data['name']
+        car = super(Change_Password, self).save(commit=False)
         password = self.cleaned_data['password']
 
         car.set_password(password)
