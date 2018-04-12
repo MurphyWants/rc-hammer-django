@@ -54,7 +54,6 @@ def new_car(request):
     args={}
     args.update(csrf(request))
     args['form'] = New_Car_Form()
-    print(args)
     return render(request, 'rc/new_car.html', args)
 
 @login_required(login_url="/login")
@@ -63,8 +62,6 @@ def edit_car(request, unique_id):
         rc_car = RC_Car.objects.get(pk=unique_id)
     except RC_Car.DoesNotExist:
         return redirect('/dashboard')
-    rc_car_dictionary = RC_Car.objects.filter(pk=unique_id).values()[0]
-    print("Car dictionary: ", rc_car_dictionary)
     if(request.user == rc_car.owner):
         form = Edit_Car(request.POST or None, instance=rc_car)
         if request.method == 'POST':
@@ -81,8 +78,6 @@ def change_password(request, unique_id):
         rc_car = RC_Car.objects.get(pk=unique_id)
     except RC_Car.DoesNotExist:
         return redirect('/dashboard')
-    rc_car_dictionary = RC_Car.objects.filter(pk=unique_id).values()[0]
-    print("Car dictionary: ", rc_car_dictionary)
     if(request.user == rc_car.owner):
         form = Change_Password(request.POST or None, instance=rc_car)
         if request.method == 'POST':
