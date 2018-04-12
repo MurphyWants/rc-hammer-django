@@ -26,7 +26,6 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'chat',
     'polls.apps.PollsConfig',
     'home.apps.HomeConfig',
     'rc_car.apps.RcCarConfig',
@@ -37,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'channels',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
