@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import New_Car as New_Car_Form, Edit_Car
+from .forms import New_Car as New_Car_Form, Edit_Car, Change_Password
 from .models import RC_Car
 from django.template.context_processors import csrf
 from django.http import HttpResponse, HttpResponseRedirect
