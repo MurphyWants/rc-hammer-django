@@ -37,6 +37,9 @@ class Edit_Car(forms.ModelForm):
         help_texts = {
             'owner': 'This changes who has ownership over the car. Be sure you really want to do this.',
         }
+        widgets = {
+            'user_list': forms.CheckboxSelectMultiple(),
+        }
 
 class Change_Password(forms.ModelForm):
 
