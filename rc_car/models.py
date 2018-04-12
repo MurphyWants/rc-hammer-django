@@ -15,8 +15,8 @@ class RC_Car(AbstractBaseUser):
                             on_delete=models.CASCADE)
     date_added = models.DateTimeField(default=datetime.now)
     last_used = models.DateTimeField(default=datetime.now)
-    viewer_list = models.ManyToManyField(User, related_name="viewer_list", blank=True, null=True)
-    user_list = models.ManyToManyField(User, related_name="user_list", blank=True, null=True)
+    viewer_list = models.ManyToManyField(User, related_name="viewer_list", blank=True, null=True, widget=forms.CheckboxSelectMultiple)
+    user_list = models.ManyToManyField(User, related_name="user_list", blank=True, null=True, widget=forms.CheckboxSelectMultiple)
     public_watch = models.BooleanField("Public to Watch", default=False)
     public_drive = models.BooleanField("Public to Drive", default=False)
     current_user = models.ForeignKey(User,
