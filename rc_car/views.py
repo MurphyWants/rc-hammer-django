@@ -26,7 +26,7 @@ def by_uuid(request, unique_id):
     try:
         rc_car = RC_Car.objects.get(pk=unique_id)
     except RC_Car.DoesNotExist:
-        return redirect(request.get_full_path())
+        return redirect(request.META['HTTP_REFERER'])
 
     current_user = request.user
     car_owner = rc_car.owner
@@ -64,6 +64,21 @@ def edit_car(request, unique_id):
     print("Car dictionary: ", rc_car_dictionary)
     if(request.user == rc_car.owner):
         form = Edit_Car(request.POST or None, instance=rc_car)
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/dashboard/rc/' + str(unique_id))
+        return render(request, 'rc/edit_car.html', {'form': form,})
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
+
+@login_required(login_url="/login")
+def change_password(request, unique_id):
+    rc_car = RC_Car.objects.get(pk=unique_id)
+    rc_car_dictionary = RC_Car.objects.filter(pk=unique_id).values()[0]
+    print("Car dictionary: ", rc_car_dictionary)
+    if(request.user == rc_car.owner):
+        form = Change_Password(request.POST or None, instance=rc_car)
         if request.method == 'POST':
             if form.is_valid():
                 form.save()

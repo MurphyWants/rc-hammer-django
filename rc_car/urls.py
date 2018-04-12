@@ -6,4 +6,5 @@ urlpatterns = [
     path('rc/<uuid:unique_id>', views.by_uuid, name='by_uuid'),
     path('new_car', views.new_car, name='new_car'),
     path('rc/<uuid:unique_id>/edit', views.edit_car, name='edit_car'),
+    path('rc/<uuid:unique_id>/change_password', views.Change_Password, name='change_password'),
     ]

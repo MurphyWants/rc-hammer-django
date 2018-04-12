@@ -37,3 +37,12 @@ class Edit_Car(forms.ModelForm):
         help_texts = {
             'owner': 'This changes who has ownership over the car. Be sure you really want to do this.',
         }
+
+class Change_Password(forms.ModelForm):
+
+    class Meta:
+        model = RC_Car
+        fields = ('password',)
+        widgets = {
+            'password': forms.PasswordInput(),
+        }
