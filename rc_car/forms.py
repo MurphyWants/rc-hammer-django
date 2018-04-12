@@ -46,3 +46,15 @@ class Change_Password(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
+
+    def save(self, commit=True):
+        car = super(New_Car, self).save(commit=False)
+        car.name = self.cleaned_data['name']
+        password = self.cleaned_data['password']
+
+        car.set_password(password)
+
+        if commit:
+            car.save()
+
+        return car
