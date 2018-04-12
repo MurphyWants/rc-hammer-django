@@ -59,7 +59,10 @@ def new_car(request):
 
 @login_required(login_url="/login")
 def edit_car(request, unique_id):
-    rc_car = RC_Car.objects.get(pk=unique_id)
+    try:
+        rc_car = RC_Car.objects.get(pk=unique_id)
+    except RC_Car.DoesNotExist:
+        return redirect('/dashboard')
     rc_car_dictionary = RC_Car.objects.filter(pk=unique_id).values()[0]
     print("Car dictionary: ", rc_car_dictionary)
     if(request.user == rc_car.owner):
@@ -74,7 +77,10 @@ def edit_car(request, unique_id):
 
 @login_required(login_url="/login")
 def change_password(request, unique_id):
-    rc_car = RC_Car.objects.get(pk=unique_id)
+    try:
+        rc_car = RC_Car.objects.get(pk=unique_id)
+    except RC_Car.DoesNotExist:
+        return redirect('/dashboard')
     rc_car_dictionary = RC_Car.objects.filter(pk=unique_id).values()[0]
     print("Car dictionary: ", rc_car_dictionary)
     if(request.user == rc_car.owner):
