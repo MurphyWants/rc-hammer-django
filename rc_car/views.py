@@ -26,7 +26,7 @@ def by_uuid(request, unique_id):
     try:
         rc_car = RC_Car.objects.get(pk=unique_id)
     except RC_Car.DoesNotExist:
-        return redirect('rc_car.views,index')
+        return redirect('/dashboard')
 
     current_user = request.user
     car_owner = rc_car.owner
