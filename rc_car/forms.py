@@ -39,6 +39,7 @@ class Edit_Car(forms.ModelForm):
         }
         widgets = {
             'user_list': forms.CheckboxSelectMultiple(),
+            'viewer_list': forms.CheckboxSelectMultiple(),
         }
 
 class Change_Password(forms.ModelForm):
