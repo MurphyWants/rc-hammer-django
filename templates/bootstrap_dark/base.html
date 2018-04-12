@@ -1,63 +1,36 @@
 {% load static %}
 <!-- Most of this is from https://bootswatch.com/darkly/ -->
 
-<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.css">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">RC-Hammer</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation" style="">
+  <a class="navbar-brand" href="#">RC-Hammer</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="true" aria-label="Toggle navigation" style="">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor03">
+  <div class="navbar-collapse collapse show" id="navbarColor03" style="">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
-
-      {% if user.is_authenticated %}
-
-      <li class="nav-item active">
-        <a class="nav-link" href="/dashboard"> Dashboard <span class="sr-only">(current)</span></a>
+	{% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard/">Dashboard</a>
       </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" href="/Logout"> Logout <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="/Logout/">Logout</a>
       </li>
-
-      {% else %}
-
-      <li class="nav-item active">
-        <a class="nav-link" href="/Login"> Login <span class="sr-only">(current)</span></a>
+	{% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="/Login/">Login</a>
       </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" href="/Register"> Register <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="/Register/">Register</a>
       </li>
-
-      {% endif %}
+	{% endif %}
     </ul>
   </div>
-  <!--
-  <div class="collapse navbar-collapse" id="navbarColor03">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Item-1</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Item-2</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Item-3</a>
-      </li>
-    </ul>
-  </div>
-
-  --->
-  *
 </nav>
 
 <div class="Page-Content">
