@@ -12,5 +12,5 @@ urlpatterns = [
     path('new_car', views.new_car, name='new_car'),
     path('rc/<uuid:unique_id>/edit/', views.edit_car, name='edit_car'),
     path('rc/<uuid:unique_id>/change_password/', views.change_password, name='change_password'),
-    url(r'api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
     ]
