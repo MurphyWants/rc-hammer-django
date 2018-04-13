@@ -91,9 +91,3 @@ def change_password(request, unique_id):
         return render(request, 'rc/edit_car.html', {'form': form,})
     else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
-
-def RC_Car_ViewSet_Owned_by(request):
-    current_user = request.user
-    queryset = RC_Car.objects.filter(owner__id=current_user.id)
-    serializer_class = Rc_Car_Serializer(queryset)
-    Response(serializer_class.data)
