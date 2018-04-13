@@ -7,7 +7,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.forms.models import model_to_dict
 from rest_framework import viewsets
 from .serializers import Rc_Car_Serializer
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -91,9 +92,9 @@ def change_password(request, unique_id):
     else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
 
-@api_view(['GET'])
-def RC_Car_ViewSet_Owned_by(request):
-    current_user = request.user
-    queryset = RC_Car.objects.filter(owner__id=current_user.id)
-    serializer_class = Rc_Car_Serializer(queryset)
-    return HttpResponse(serializer_class.data)
+class RC_Car_ViewSet_Owned_by(APIView):
+    def get(self, request):
+        current_user = request.user
+        queryset = RC_Car.objects.filter(owner__id=current_user.id)
+        serializer_class = Rc_Car_Serializer(queryset)
+        return HttpResponse(serializer_class.data)
