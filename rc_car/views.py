@@ -96,4 +96,4 @@ def RC_Car_ViewSet_Owned_by(request):
     current_user = request.user
     queryset = RC_Car.objects.filter(owner__id=current_user.id)
     serializer_class = Rc_Car_Serializer(queryset)
-    response(serializer_class.data)
+    Response(serializer_class.data)
