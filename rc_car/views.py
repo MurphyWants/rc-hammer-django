@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import New_Car as New_Car_Form, Edit_Car, Change_Password
 from .models import RC_Car
 from django.template.context_processors import csrf
-from django.http import HttpResponse, HttpResponseRedirect, Response
+from django.http import HttpResponse, HttpResponseRedirect
 from django.forms.models import model_to_dict
 from rest_framework import viewsets
 from .serializers import Rc_Car_Serializer
@@ -96,4 +96,4 @@ def RC_Car_ViewSet_Owned_by(request):
     current_user = request.user
     queryset = RC_Car.objects.filter(owner__id=current_user.id)
     serializer_class = Rc_Car_Serializer(queryset)
-    return Response(serializer_class.data)
+    return HttpResponse(serializer_class.data)
