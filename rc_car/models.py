@@ -1,11 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractBaseUser
 from datetime import datetime
-from django.contrib.auth.models import AbstractBaseUser
+from django.conf import settings
+from django.db.models.signal import post_save
 
 import uuid
 
 # Create your models here.
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 class RC_Car(AbstractBaseUser):
     name = models.CharField(max_length=200)
