@@ -34,6 +34,11 @@ The rc_car class is from AbstractBaseUser so that the car can have their own pas
         - Given a user, returned True if they are allowed to control it, False otherwise
     - Can_view(User)
         - Given a user, returned True if they are allowed to watch it, False otherwise
+    - Is_Online(None)
+        - Returns true if last_used is within 2 minutes, False otherwise
+    - Password_Correct(Password)
+        - Custom authentication, given a password check if that password is the same as the hashed password
+        - Used during websockets for authentication
 
 """
 
@@ -53,6 +58,9 @@ class RC_Car(AbstractBaseUser):
                             related_name="Current_User", blank=True, null=True, default=None, on_delete=models.SET_DEFAULT, editable=False)
     password = models.CharField(max_length=200, default="", null=False)
 
+    password_lockout = models.BooleanField(default=False, editable=False)
+    password_attempts = models.IntegerField(default=0, editable=False)
+
     USERNAME_FIELD = 'id'
 
     def __str__(self):
@@ -62,4 +70,25 @@ class RC_Car(AbstractBaseUser):
         if (input_user == self.owner) or (input_user in self.user_list.all()):
             return True
         else:
+            return False
+
+    def Can_Watch(self,input_user):
+        if (self.Can_Control(input_user)) or (input_user in self.viewer_list.all()):
+            return True
+        else:
+            return False
+
+    def Is_Online(self):
+        return self.last_used > datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(seconds=120)
+
+    def Check_Password(self, input_password):
+        if(self.password_lockout == True):
+            return False
+        else if (self.check_password(input_password)):
+            self.password_attempts = 0
+            return True
+        else:
+            self.password_attempts = self.password_attempts + 1
+            if (self.password_attempts > 2):
+                self.password_lockout = True
             return False

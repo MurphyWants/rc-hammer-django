@@ -56,6 +56,8 @@ class Change_Password(forms.ModelForm):
         password = self.cleaned_data['password']
 
         car.set_password(password)
+        car.password_lockout = False
+        car.password_attempts = 0
 
         if commit:
             car.save()
