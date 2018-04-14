@@ -31,7 +31,7 @@ Data_Consumer: <uuid>/data
 
 class Drive_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['unique_id']
+        self.room_name = self.scope['url_route']['kwargs']['unique_id'] + "_drive"
         self.room_group_name = 'rc_car%s' % self.room_name
         rc_car = RC_Car.objects.get(pk=self.room_name)
         current_user = rc_car.current_user
