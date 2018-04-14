@@ -105,16 +105,67 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
 
 class Data_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
-        return 0
+        self.room_name = self.scope['url_route']['kwargs']['unique_id']
+        self.room_group_name = 'rc_car_login%s' % self.room_name
+
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
 
     async def disconnect(self, close_code):
-        return 0
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
 
     async def receive(self, text_data):
-        return 0
+        text_data_json = json.loads(text_data)
+        type = text_data_json['type']
+        rc_car = RC_Car.objects.get(pk=self.room_name)
 
-    async def message_handler(self, event):
-        return 0
+        if(type == "Login"):
+            if(rc_car.Check_Password(text_data_json['password'])):
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'login_success',
+                    }
+                )
+                await self.close()
+                self.room_group_name = 'rc_car%s' % self.room_name
+                await self.channel_layer.group_add(
+                    self.room_group_name,
+                    self.channel_name
+                )
+
+                await self.accept()
+            else:
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'invalid_password',
+                    }
+                )
+                await self.close()
+
+    async def invalid_password(self, event):
+        await self.send_json({
+            "type": "Invalid-Password",
+            "message": "Invalid Password",
+        })
+
+    async def give_password(self, event):
+        await self.send_json({
+            "type": "Login",
+            "message": "Respond with password",
+        })
+
+    async def login_success(self, event):
+        await self.send_json({
+            "type": "Login-Success",
+            "message": "Moving to room",
+        })
 
 class In_Use_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
