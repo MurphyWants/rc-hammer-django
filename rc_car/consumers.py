@@ -134,14 +134,14 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
                         'type': 'login_success',
                     }
                 )
-                await self.close()
+                '''await self.close()
                 self.room_group_name = 'rc_car%s' % self.room_name
                 await self.channel_layer.group_add(
                     self.room_group_name,
                     self.channel_name
                 )
 
-                await self.accept()
+                await self.accept()'''
             else:
                 await self.channel_layer.group_send(
                     self.room_group_name,
