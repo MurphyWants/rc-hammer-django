@@ -48,8 +48,6 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
             self.channel_name
         )
 
-        print ("group: ", self.room_group_name, "\nchannel: ", self.channel_name)
-
         await self.accept()
 
     async def disconnect(self, close_code):
