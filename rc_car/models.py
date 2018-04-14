@@ -84,7 +84,7 @@ class RC_Car(AbstractBaseUser):
     def Check_Password(self, input_password):
         if(self.password_lockout == True):
             return False
-        else if (self.check_password(input_password)):
+        elif (self.check_password(input_password)):
             self.password_attempts = 0
             return True
         else:
