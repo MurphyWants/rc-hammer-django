@@ -7,5 +7,4 @@ class RcCarConfig(AppConfig):
         from .models import RC_Car
         for car in RC_Car.objects.all():
             car.current_user = None
-            print(car.id, " setting to None")
             car.save()
