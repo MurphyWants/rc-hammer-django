@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractBaseUser
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -79,7 +79,7 @@ class RC_Car(AbstractBaseUser):
             return False
 
     def Is_Online(self):
-        return self.last_used > datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(seconds=120)
+        return self.last_used > datetime.now(timezone.utc) - timedelta(seconds=120)
 
     def Check_Password(self, input_password):
         if(self.password_lockout == True):
