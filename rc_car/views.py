@@ -38,8 +38,8 @@ def by_uuid(request, unique_id):
     if (current_user.id == car_owner.id):
         return render(request, template_name, {'rc' : rc_car, 'car_owner' : True,})
 
-    if (rc_car.Can_Control(current_user)):
     '''if (current_user in rc_car.user_list.all()):'''
+    if (rc_car.Can_Control(current_user)):
         return render(request, template_name, {'rc' : rc_car, 'car_user' : True})
 
     if (current_user in rc_car.viewer_list.all()):
