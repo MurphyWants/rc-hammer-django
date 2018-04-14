@@ -128,7 +128,7 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
 
         if(type == "Login"):
             if(rc_car.Check_Password(text_data_json['password'])):
-                self.channel_layer.group_send(
+                await self.channel_layer.group_send(
                     self.room_group_name,
                     {
                         'type': 'login_success',
@@ -141,7 +141,6 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
                     self.channel_name
                 )
 
-                await self.accept()
             else:
                 await self.channel_layer.group_send(
                     self.room_group_name,
