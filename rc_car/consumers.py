@@ -10,19 +10,24 @@ from .models import RC_Car
 <uuid>/in_use
 '''
 
-class Video_Consumer(AsyncJsonWebsocketConsumer):
-    async def connect(self):
-        return 0
+"""
 
-    async def disconnect(self, close_code):
-        return 0
+Consumer classes for the rc_cars:
 
-    async def receive(self, text_data):
-        return 0
+Drive_Consumer: <uuid>/control
+    - Allow one user at a time to send data to control the car
 
-    async def message_handler(self, event):
-        return 0
+In_Use_Consumer: <uuid>/in_use
+    - Allow users to ping the channel
+    - Returns False if nobody is using it
+    - If someone is using it, Returns true, current_user id, ping user id
 
+Data_Consumer: <uuid>/data
+    - Only allow the rc_car to post to it
+    - Other users can receive data from it
+    - TODO
+
+"""
 
 class Drive_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
@@ -35,6 +40,8 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
         if(current_user == None):
             rc_car.current_user = user
             rc_car.save()
+        else:
+            await self.close()
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -73,7 +80,6 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
         if (user == current_user):
 
             rc_car.last_ping = datetime.now()
-            rc_car.last_used = datetime.now()
             rc_car.save()
 
             await self.channel_layer.group_send(

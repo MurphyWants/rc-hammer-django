@@ -14,6 +14,29 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
+"""
+
+The rc_car class is from AbstractBaseUser so that the car can have their own password
+- Variables:
+    - Name: Named when created, can be changed
+    - Id: a unique uuid created, availible to anyone that has access
+    - Owner: assigned when created to the user that created it
+    - Date_Added: assigned when created to that date and time
+    - Last_used: the last date/time the car itself logged in and pinged the server, default when its created
+    - Viewer_List: A list of users that can watch what is happening, empty by default
+    - User_List: A list of users that can both watch and control the car, empty by default
+    - Public_Watch: A checkbox off by default to let anyone watch what is happening
+    - Public_Drive: A checkbox off by default to let anyone drive
+    - Current_User: If a user is controlling it they are stored here, otherwise empty
+    - Password: Set by the owner, changed by the owner, used for authenticating the car
+- Functions:
+    - Can_control(User)
+        - Given a user, returned True if they are allowed to control it, False otherwise
+    - Can_view(User)
+        - Given a user, returned True if they are allowed to watch it, False otherwise
+
+"""
+
 class RC_Car(AbstractBaseUser):
     name = models.CharField(max_length=200)
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, primary_key=True)
@@ -34,3 +57,9 @@ class RC_Car(AbstractBaseUser):
 
     def __str__(self):
         return self.name
+
+    def Can_Control(self, input_user):
+        if (input_user == self.owner) or (input_user in self.user_list.all()):
+            return True
+        else:
+            return False
