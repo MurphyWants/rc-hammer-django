@@ -168,16 +168,16 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
             "message": "Moving to room",
         })
 
-        async def rc_drive_controls(self, event):
-            drive_direction = event['drive']
-            scale = event['scale']
+    async def rc_drive_controls(self, event):
+        drive_direction = event['drive']
+        scale = event['scale']
 
-            await self.send_json(
-            {
-                "drive": drive_direction,
-                "scale": scale,
-            },
-            )
+        await self.send_json(
+        {
+            "drive": drive_direction,
+            "scale": scale,
+        },
+        )
 
 class In_Use_Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
