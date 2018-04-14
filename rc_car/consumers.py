@@ -149,6 +149,9 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
                     }
                 )
                 await self.close()
+            else:
+                rc_car.last_used = datetime.now()
+                rc_car.save()
 
     async def invalid_password(self, event):
         await self.send_json({

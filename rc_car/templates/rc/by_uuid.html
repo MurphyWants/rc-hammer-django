@@ -70,7 +70,7 @@ control_socket.onclose = function(e){
 document.querySelector('#rc_left').onclick = function(e){
 	var scale = document.querySelector('#rc_scale').value;
 	control_socket.send(JSON.stringify({
-		'drive': 'left',
+		'drive': '180',
 		'scale': scale,
 	}))
 };
@@ -78,7 +78,7 @@ document.querySelector('#rc_left').onclick = function(e){
 document.querySelector('#rc_right').onclick = function(e){
 	var scale = document.querySelector('#rc_scale').value;
 	control_socket.send(JSON.stringify({
-		'drive': 'right',
+		'drive': '0',
 		'scale': scale,
 	}))
 };
@@ -86,7 +86,7 @@ document.querySelector('#rc_right').onclick = function(e){
 document.querySelector('#rc_forward').onclick = function(e){
 	var scale = document.querySelector('#rc_scale').value;
 	control_socket.send(JSON.stringify({
-		'drive': 'forward',
+		'drive': '90',
 		'scale': scale,
 	}))
 };
@@ -94,7 +94,7 @@ document.querySelector('#rc_forward').onclick = function(e){
 document.querySelector('#rc_reverse').onclick = function(e){
 	var scale = document.querySelector('#rc_scale').value;
 	control_socket.send(JSON.stringify({
-		'drive': 'reverse',
+		'drive': '270',
 		'scale': scale,
 	}))
 };
