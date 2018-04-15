@@ -56,17 +56,6 @@
 
 </br>
 
-<div id="Joystick"></div>
-<span id="result"></span>
-<style>
-	#Joystick{
-		width: 25%;
-		height: 25%;
-		border: 1px solid;
-		overflow: hidden;
-		margin: 5%;
-	}
-</style>
 <script>
 
 var roomName = "{{ rc.id }}";
@@ -106,7 +95,7 @@ document.querySelector('#rc_forward').onclick = function(e){
 	}))
 };
 
-/*
+
 document.querySelector('#rc_reverse').onclick = function(e){
 	var scale = document.querySelector('#rc_scale').value;
 	control_socket.send(JSON.stringify({
@@ -114,7 +103,6 @@ document.querySelector('#rc_reverse').onclick = function(e){
 		'scale': scale,
 	}))
 };
-*/
 
 function toRadians (angle) {
   return angle * (Math.PI / 180);
@@ -128,17 +116,44 @@ function send_control(angle){
 	}))
 };
 
-setInterval(function(){
-	var reverse_button = document.querySelector('#rc_reverse');
-	reverse_button.onclick = function(e){
-		var scale = document.querySelector('#rc_scale').value;
-		control_socket.send(JSON.stringify({
-			'drive': '270',
-			'scale': scale,
-		}))
+document.body.onkeydown = function(e){
+	x = 0;
+	x_angle = -1;
+	y = 0;
+	y_angle = -1;
+	if(event.which == 38){
+		y = y + 1;
 	};
-}, 1/30 * 1000);
+	if(event.which == 40){
+		y = y - 1;
+	};
+	if(event.which == 39){
+		x = x + 1;
+	};
+	if(event.which == 37){
+		x = x - 1;
+	};
+	switch(x){
+		case -1:
+			x_angle = 180;
+		case 1:
+			x_angle = 0;
+	};
 
+	switch(y){
+		case -1:
+			y_angle = 270;
+		case 1:
+			y_angle = 90;
+	};
+	if ((x = 0) && (y != 0)){
+		send_control(y_angle);
+	} else if ((x != 0) && (y == 0)){
+		send_control(x_angle);
+	} else if ((x != 0) && (y != 0)){
+		send_control((y_angle + x_angle)/2);
+	};
+};
 </script>
 
 </div>
