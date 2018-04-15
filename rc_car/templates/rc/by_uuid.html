@@ -63,6 +63,8 @@
 		width: 25%;
 		height: 25%;
 		border: 1px solid;
+		overflow: hidden;
+		margin: 5%;
 	}
 </style>
 
@@ -123,6 +125,13 @@ var joystick = new VirtualJoystick({
 	container: document.getElementById('Joystick'),
 	mouseSupport: true,
 });
+
+joystick.addEventListener('touchStart', function(){
+	console.log('down')
+})
+joystick.addEventListener('touchEnd', function(){
+	console.log('up')
+})
 
 setInterval(function(){
 	var outputEl	= document.getElementById('result');
