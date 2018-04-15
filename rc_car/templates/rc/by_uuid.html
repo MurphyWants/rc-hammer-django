@@ -121,16 +121,16 @@ document.body.onkeydown = function(e){
 	x_angle = -1;
 	y = 0;
 	y_angle = -1;
-	if(event.which == 38){
+	if(e.keycode == 38){
 		y = y + 1;
 	};
-	if(event.which == 40){
+	if(e.keycode == 40){
 		y = y - 1;
 	};
-	if(event.which == 39){
+	if(e.keycode == 39){
 		x = x + 1;
 	};
-	if(event.which == 37){
+	if(e.keycode == 37){
 		x = x - 1;
 	};
 	switch(x){
