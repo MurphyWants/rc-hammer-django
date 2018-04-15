@@ -31,6 +31,10 @@
 {% endif %}
 </div>
 
+{% load static %}
+
+<script src="{% static js/virtualjoystick.js %}"
+
 <div class="RC_Controls">
 
 <form>
@@ -51,6 +55,8 @@
 <input id="rc_right" type="button" value="Right"/>
 
 </br>
+
+<div id="Joystick"></div>
 
 <script>
 
@@ -98,6 +104,26 @@ document.querySelector('#rc_reverse').onclick = function(e){
 		'scale': scale,
 	}))
 };
+
+function toRadians (angle) {
+  return angle * (Math.PI / 180);
+};
+
+var joystick = new VirtualJoystick({
+	container: document.getElementById('Joystick'),
+	mouseSupport: true,
+});
+
+setInterval(function(){
+	var outputEl	= document.getElementById('result');
+	outputEl.innerHTML	= '<b>Result:</b> '
+		+ ' dx:'+joystick.deltaX()
+		+ ' dy:'+joystick.deltaY()
+		+ (joystick.right()	? ' right'	: '')
+		+ (joystick.up()	? ' up'		: '')
+		+ (joystick.left()	? ' left'	: '')
+		+ (joystick.down()	? ' down' 	: '')
+}, 1/30 * 1000);
 
 </script>
 
