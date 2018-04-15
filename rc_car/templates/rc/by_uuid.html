@@ -117,6 +117,7 @@ function send_control(angle){
 };
 
 document.body.onkeydown = function(e){
+  alert(String.fromCharCode(e.keyCode)+" --> "+e.keyCode);
 	x = 0;
 	x_angle = -1;
 	y = 0;
