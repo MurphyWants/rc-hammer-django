@@ -1,34 +1,30 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="Information">
-<strong> Currently viewing: {{ rc.name }} </strong>
-<ul>
-		<li> Date Added: {{ rc.date_added }}  </li>
-    <li> Last Used: {{ rc.last_used }} </li>
-    <li> Car id: {{ rc.id }}</li>
-</ul>
+	<strong> Currently viewing: {{ rc.name }} </strong>
+	<ul>
+		<li> Date Added: {{ rc.date_added }} </li>
+		<li> Last Used: {{ rc.last_used }} </li>
+		<li> Car id: {{ rc.id }}</li>
+	</ul>
 
-{% if car_owner %}
+	{% if car_owner %}
 
-<p> You are the car owner </p>
+	<p> You are the car owner </p>
 
-<p> <a href="{{ request.path }}/edit/"> Edit this car </a> <p>
-<p> <a href="{{ request.path }}/change_password/"> Change the car's password </a> <p>
+	<p> <a href="{{ request.path }}/edit/"> Edit this car </a>
+		<p>
+			<p> <a href="{{ request.path }}/change_password/"> Change the car's password </a>
+				<p>
 
-{% endif %}
+					{% endif %} {% if car_viewer %}
 
-{% if car_viewer %}
+					<p> This car was shared and you can watch </p>
 
-<p> This car was shared and you can watch </p>
+					{% endif %} {% if car_user %}
 
-{% endif %}
+					<p> This car was shared and you can drive </p>
 
-{% if car_user %}
-
-<p> This car was shared and you can drive </p>
-
-{% endif %}
+					{% endif %}
 </div>
 
 {% load static %}
@@ -37,125 +33,103 @@
 
 <div class="RC_Controls">
 
-<form>
+	<form>
 
-	<input id="rc_scale" type="range" name="inputRange" min="0" max="100" value="100" oninput="this.form.inputType.value=this.value" />
-	<input type="number" name="inputType" min="0" max="100" value="100" oninput="this.form.inputRange.value=this.value" />
+		<input id="rc_scale" type="range" name="inputRange" min="0" max="100" value="100" oninput="this.form.inputType.value=this.value" />
+		<input type="number" name="inputType" min="0" max="100" value="100" oninput="this.form.inputRange.value=this.value" />
 
-</form>
+	</form>
 
-</script>
-
-
-</br>
-
-<input id="rc_left" type="button" value="Left"/>
-<input id="rc_forward" type="button" value="Forward"/>
-<input id="rc_reverse" type="button" value="Reverse"/>
-<input id="rc_right" type="button" value="Right"/>
-
-</br>
-
-<script>
-
-var roomName = "{{ rc.id }}";
-
-var control_socket = new WebSocket(
-	'ws://' + window.location.host + '/ws/' + roomName + '/control/');
-
-control_socket.onmessage = function(e){
-	var we_do_nothing_here = e;
-};
-
-control_socket.onclose = function(e){
-	console.error('Error: socket closed');
-};
-
-document.querySelector('#rc_left').onclick = function(e){
-	var scale = document.querySelector('#rc_scale').value;
-	control_socket.send(JSON.stringify({
-		'drive': '180',
-		'scale': scale,
-	}))
-};
-
-document.querySelector('#rc_right').onclick = function(e){
-	var scale = document.querySelector('#rc_scale').value;
-	control_socket.send(JSON.stringify({
-		'drive': '0',
-		'scale': scale,
-	}))
-};
-
-document.querySelector('#rc_forward').onclick = function(e){
-	var scale = document.querySelector('#rc_scale').value;
-	control_socket.send(JSON.stringify({
-		'drive': '90',
-		'scale': scale,
-	}))
-};
+	</script>
 
 
-document.querySelector('#rc_reverse').onclick = function(e){
-	var scale = document.querySelector('#rc_scale').value;
-	control_socket.send(JSON.stringify({
-		'drive': '270',
-		'scale': scale,
-	}))
-};
+	</br>
 
-function toRadians (angle) {
-  return angle * (Math.PI / 180);
-};
+	<input id="rc_left" type="button" value="Left" />
+	<input id="rc_forward" type="button" value="Forward" />
+	<input id="rc_reverse" type="button" value="Reverse" />
+	<input id="rc_right" type="button" value="Right" />
 
-function send_control(angle){
-	var scale = document.querySelector('#rc_scale').value;
-	control_socket.send(JSON.stringify({
-		'drive': angle,
-		'scale': scale,
-	}))
-};
+	</br>
 
-document.body.onkeydown = function(e){
-  alert(String.fromCharCode(e.keyCode)+" --> "+e.keyCode);
-	x = 0;
-	x_angle = -1;
-	y = 0;
-	y_angle = -1;
-	if(String.fromCharCode(e.keyCode) == 38){
-		y = y + 1;
-	};
-	if(e.keycode == 40){
-		y = y - 1;
-	};
-	if(e.keycode == 39){
-		x = x + 1;
-	};
-	if(e.keycode == 37){
-		x = x - 1;
-	};
-	switch(x){
-		case -1:
-			x_angle = 180;
-		case 1:
-			x_angle = 0;
-	};
+	<script>
+		var roomName = "{{ rc.id }}";
 
-	switch(y){
-		case -1:
-			y_angle = 270;
-		case 1:
-			y_angle = 90;
-	};
-	if ((x = 0) && (y != 0)){
-		send_control(y_angle);
-	} else if ((x != 0) && (y == 0)){
-		send_control(x_angle);
-	} else if ((x != 0) && (y != 0)){
-		send_control((y_angle + x_angle)/2);
-	};
-};
-</script>
+		var control_socket = new WebSocket(
+			'ws://' + window.location.host + '/ws/' + roomName + '/control/');
+
+		control_socket.onmessage = function(e) {
+			var we_do_nothing_here = e;
+		};
+
+		control_socket.onclose = function(e) {
+			console.error('Error: socket closed');
+		};
+
+		document.querySelector('#rc_left').onclick = function(e) {
+			var scale = document.querySelector('#rc_scale').value;
+			control_socket.send(JSON.stringify({
+				'drive': '180',
+				'scale': scale,
+			}))
+		};
+
+		document.querySelector('#rc_right').onclick = function(e) {
+			var scale = document.querySelector('#rc_scale').value;
+			control_socket.send(JSON.stringify({
+				'drive': '0',
+				'scale': scale,
+			}))
+		};
+
+		document.querySelector('#rc_forward').onclick = function(e) {
+			var scale = document.querySelector('#rc_scale').value;
+			control_socket.send(JSON.stringify({
+				'drive': '90',
+				'scale': scale,
+			}))
+		};
+
+
+		document.querySelector('#rc_reverse').onclick = function(e) {
+			var scale = document.querySelector('#rc_scale').value;
+			control_socket.send(JSON.stringify({
+				'drive': '270',
+				'scale': scale,
+			}))
+		};
+
+		function toRadians(angle) {
+			return angle * (Math.PI / 180);
+		};
+
+		function send_control(angle) {
+			var scale = document.querySelector('#rc_scale').value;
+			control_socket.send(JSON.stringify({
+				'drive': angle,
+				'scale': scale,
+			}))
+		};
+
+		document.onkeydown = function() {
+			switch (window.event.keyCode) {
+				case 37:
+					send_control(180)
+					break;
+				case 38:
+					send_control(90)
+					break;
+				case 39:
+					send_control(0)
+					break;
+				case 40:
+					send_control(270)
+					break;
+			}
+		};
+
+		};
+	</script>
 
 </div>
 
