@@ -67,9 +67,6 @@
 		margin: 5%;
 	}
 </style>
-
-<script src="{% static "js/virtualjoystick.js" %}"> </script>
-
 <script>
 
 var roomName = "{{ rc.id }}";
@@ -109,6 +106,7 @@ document.querySelector('#rc_forward').onclick = function(e){
 	}))
 };
 
+/*
 document.querySelector('#rc_reverse').onclick = function(e){
 	var scale = document.querySelector('#rc_scale').value;
 	control_socket.send(JSON.stringify({
@@ -116,39 +114,29 @@ document.querySelector('#rc_reverse').onclick = function(e){
 		'scale': scale,
 	}))
 };
+*/
 
 function toRadians (angle) {
   return angle * (Math.PI / 180);
 };
 
-var joystick = new VirtualJoystick({
-	container: document.getElementById('Joystick'),
-	mouseSupport: true,
-	baseX		: 200,
-	baseY		: 200,
-});
-
-joystick.addEventListener('touchStart', function(){
-	console.log('down')
-})
-joystick.addEventListener('touchEnd', function(){
-	console.log('up')
-})
+function send_control(angle){
+	var scale = document.querySelector('#rc_scale').value;
+	control_socket.send(JSON.stringify({
+		'drive': angle,
+		'scale': scale,
+	}))
+};
 
 setInterval(function(){
-	var outputEl	= document.getElementById('result');
-	var scale = document.querySelector('#rc_scale').value;
-	outputEl.innerHTML	= '<b>Result:</b> '
-		+ ' dx:'+joystick.deltaX()
-		+ ' dy:'+joystick.deltaY()
-		+ (joystick.right()	? ' right'	: '')
-		+ (joystick.up()	? ' up'		: '')
-		+ (joystick.left()	? ' left'	: '')
-		+ (joystick.down()	? ' down' 	: '')
+	var reverse_button = document.querySelector('#rc_reverse');
+	reverse_button.onclick = function(e){
+		var scale = document.querySelector('#rc_scale').value;
 		control_socket.send(JSON.stringify({
-			'drive': Math.asin(joystick.deltaX()/joystick.deltaY()),
+			'drive': '270',
 			'scale': scale,
 		}))
+	};
 }, 1/30 * 1000);
 
 </script>
