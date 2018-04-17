@@ -79,7 +79,7 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
 
         if (user == current_user):
 
-            if (datetime.now(timezone.utc) > (rc_car.last_consumer_ping - timedelta(milliseconds=49))):
+            if (datetime.now(timezone.utc) > (rc_car.last_consumer_ping - timedelta(milliseconds=10))):
                 rc_car.last_consumer_ping = datetime.now()
                 rc_car.save()
 
