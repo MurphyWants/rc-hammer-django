@@ -8,3 +8,6 @@ class RcCarConfig(AppConfig):
         for car in RC_Car.objects.all():
             car.current_user = None
             car.save()
+
+class NullConfig(AppConfig):
+    name = 'rc_car'
