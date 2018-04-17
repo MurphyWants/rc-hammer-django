@@ -1,4 +1,7 @@
 {% extends "base.html" %} {% block content %}
+<style>
+.card {display:inline-block;}
+</style>
 	<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
 		<div class="card-header"> Car Information </div>
 		<div class="card-body">
@@ -9,7 +12,7 @@
 		</div>
 	</div>
 	<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-		<div class="card-header"> Availible? </div>
+		<div class="card-header"> Available? </div>
 		<div class="card-body">
 			<h4 class="card-title"> Todo </h4>
 			<p class="card-text"> Will ping the websocket to say if this is being used or not </p>
