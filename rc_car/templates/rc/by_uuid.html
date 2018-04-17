@@ -166,9 +166,9 @@
 					var angle = Math.atan2((-1*controller.axes[1].toFixed(4)),controller.axes[0].toFixed(4)) * (180/Math.PI);
 		      console.log("Angle: " + angle);
 					var scale = 100*Math.abs(controller.axes[3].toFixed(4));
-					var input = document.getElementById("rc_scale");
-					if (scale < input.value){
-						scale = input.value;
+					var input = document.getElementById("rc_scale").value;
+					if (scale < input){
+						scale = input;
 					}
 					send_control_with_scale(angle, scale);
 		    }
