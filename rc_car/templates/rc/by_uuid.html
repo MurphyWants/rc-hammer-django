@@ -111,6 +111,13 @@
 			}))
 		};
 
+		function send_control_with_scale(angle, scale) {
+			control_socket.send(JSON.stringify({
+				'drive': angle,
+				'scale': scale,
+			}))
+		};
+
 		document.onkeydown = function() {
 			switch (window.event.keyCode) {
 				case 37:
@@ -158,7 +165,7 @@
 		    if(((controller.axes[1].toFixed(4) > .01) || (controller.axes[1].toFixed(4) < -.01)) && (((controller.axes[0].toFixed(4) > .01) || (controller.axes[0].toFixed(4) < -.01)))){
 					var angle = Math.atan2((-1*controller.axes[1].toFixed(4)),controller.axes[0].toFixed(4)) * (180/Math.PI);
 		      console.log("Angle: " + angle);
-					send_control(angle);
+					send_control_with_scale(angle, Math.abs(controller.axes[3].toFixed(4)));
 		    }
 
 		    if(controller.axes[3].toFixed(4) > .01){
