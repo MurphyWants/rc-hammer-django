@@ -148,7 +148,7 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
         rc_car = RC_Car.objects.get(pk=self.room_name)
 
         if(type == "Login"):
-            """ Letting cars login over socket """"
+            """ Letting cars login over socket ""
             """ Note: if this isn't done over ssl/wss it will be plain text """
 
             if(rc_car.Check_Password(text_data_json['password'])):
