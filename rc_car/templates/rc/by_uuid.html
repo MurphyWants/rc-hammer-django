@@ -3,7 +3,7 @@
 .card {display:inline-block;}
 </style>
 <div class="col-sm-12 col-lg-6">
-	<div class="card text-white bg-secondary mb-3 align-items-stretch h-100" style="max-width: 20rem;">
+	<div class="card text-white bg-secondary mb-3 align-items-stretch" style="max-width: 20rem;">
 		<div class="card-header"> Car Information </div>
 		<div class="card-body">
 			<h4 class="card-title"> {{ rc.name }} </h4>
@@ -12,7 +12,7 @@
 			<p class="card-text"> Last Used: {{ rc.last_used }} </p>
 		</div>
 	</div>
-	<div class="card text-white bg-secondary mb-3 align-items-stretch h-100" style="max-width: 20rem;">
+	<div class="card text-white bg-secondary mb-3 align-items-stretch" style="max-width: 20rem;">
 		<div class="card-header"> Available? </div>
 		<div class="card-body">
 			<h4 class="card-title"> Todo </h4>
@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	{% if is_owner %}
-	<div class="card text-white bg-secondary mb-3 align-items-stretch h-100" style="max-width: 20rem;">
+	<div class="card text-white bg-secondary mb-3 align-items-stretch" style="max-width: 20rem;">
 		<div class="card-header"> You are the owner </div>
 		<div class="card-body">
 			<h4 class="card-title"> Owner </h4>
