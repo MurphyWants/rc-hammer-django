@@ -36,7 +36,7 @@
 	<form>
 
 		<input id="rc_scale" type="range" name="inputRange" min="0" max="100" value="100" oninput="this.form.inputType.value=this.value" />
-		<input type="number" name="inputType" min="0" max="100" value="100" oninput="this.form.inputRange.value=this.value" />
+		<input id="rc_scale_text_box" type="number" name="inputType" min="0" max="100" value="100" oninput="this.form.inputRange.value=this.value" />
 
 	</form>
 
@@ -127,6 +127,100 @@
 					break;
 			}
 		};
+
+		var haveEvents = 'GamepadEvent' in window;
+		var controllers = {};
+		var rAF = window.mozRequestAnimationFrame ||
+		  window.webkitRequestAnimationFrame ||
+		  window.requestAnimationFrame;
+
+		function connecthandler(e) {
+		  addgamepad(e.gamepad);
+		}
+		function addgamepad(gamepad) {
+
+		  controllers[gamepad.index] = gamepad;
+		  rAF(updateStatus);
+		}
+
+		function disconnecthandler(e) {
+		  removegamepad(e.gamepad);
+		}
+
+		function removegamepad(gamepad) {
+		  delete controllers[gamepad.index];
+		}
+
+		function updateStatus() {
+		  scangamepads();
+		  for (j in controllers) {
+		    var controller = controllers[j];
+		    if(((controller.axes[1].toFixed(4) > .01) || (controller.axes[1].toFixed(4) < -.01)) && (((controller.axes[0].toFixed(4) > .01) || (controller.axes[0].toFixed(4) < -.01)))){
+					var angle = Math.atan2((-1*controller.axes[1].toFixed(4)),controller.axes[0].toFixed(4)) * (180/Math.PI);
+		      console.log("Angle: " + angle));
+					send_control(angle);
+		    }
+
+		    if(controller.axes[3].toFixed(4) > .01){
+					var input = document.getElementById("rc_scale");
+					var input_text = document.getElementById("rc_scale_text_box");
+
+					var scale_value = input.value;
+
+					scale_value = scale_value + .1;
+
+					if (scale_value > 100){
+						scale_value = 100;
+					}
+
+					input.innerHTML = scale_value;
+					input_text.innerHTML = scale_value;
+
+		      console.log("More: " + scale_value);
+		    }
+
+		    if(controller.axes[3].toFixed(4) < -.01){
+
+					var input = document.getElementById("rc_scale");
+					var input_text = document.getElementById("rc_scale_text_box");
+
+					var scale_value = input.value;
+
+					scale_value = scale_value - .1;
+
+					if (scale_value < 0){
+						scale_value = 0;
+					}
+
+					input.innerHTML = scale_value;
+					input_text.innerHTML = scale_value;
+
+		      console.log("Less: " + scale_value);
+		    }
+
+		  }
+		  rAF(updateStatus);
+		}
+
+		function scangamepads() {
+		  var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);
+		  for (var i = 0; i < gamepads.length; i++) {
+		    if (gamepads[i]) {
+		      if (!(gamepads[i].index in controllers)) {
+		        addgamepad(gamepads[i]);
+		      } else {
+		        controllers[gamepads[i].index] = gamepads[i];
+		      }
+		    }
+		  }
+		}
+
+		if (haveEvents) {
+		  window.addEventListener("gamepadconnected", connecthandler);
+		  window.addEventListener("gamepaddisconnected", disconnecthandler);
+		} else {
+		  setInterval(scangamepads, 500);
+		}
 
 	</script>
 
