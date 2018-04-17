@@ -1,4 +1,15 @@
 {% extends "base.html" %} {% block content %}
+
+<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+  <div class="card-header">General Car Information </div>
+  <div class="card-body">
+    <h4 class="card-title"> {{ rc.name }} </h4>
+    <p class="card-text"> UUID: {{ rc.id }} </p>
+		<p class="card-text"> Created: {{ rc.date_added }} </p>
+		<p class="card-text"> Last Used: {{ rc.last_used }} </p>
+  </div>
+</div>
+
 <div class="Information">
 	<strong> Currently viewing: {{ rc.name }} </strong>
 	<ul>

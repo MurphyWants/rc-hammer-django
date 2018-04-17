@@ -35,6 +35,13 @@ def by_uuid(request, unique_id):
     current_user = request.user
     car_owner = rc_car.owner
 
+    if (rc_car.Can_Watch(current_user)):
+
+        return rendner(request, template_name, {'rc': rc_car, 'is_owner': car_owner == current_user, 'can_control' : rc_car.Can_Control(current_user), 'can_view' : rc_car.Can_Watch(current_user)})
+
+    else:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
+    """
     if (current_user.id == car_owner.id):
         return render(request, template_name, {'rc' : rc_car, 'car_owner' : True,})
 
@@ -47,6 +54,8 @@ def by_uuid(request, unique_id):
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
 
+    ^^^ Keeping legacy code for legacy reasons
+    """
 @login_required(login_url="/login")
 def new_car(request):
     if request.method == 'POST':
