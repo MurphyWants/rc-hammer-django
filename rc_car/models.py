@@ -55,7 +55,6 @@ class RC_Car(AbstractBaseUser):
     password_lockout = models.BooleanField(default=False, editable=False)
     password_attempts = models.IntegerField(default=0, editable=False)
 
-    last_consumer_ping = models.DateTimeField(default=datetime.now)
 
     USERNAME_FIELD = 'id'
 
