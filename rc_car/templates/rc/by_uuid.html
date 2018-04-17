@@ -165,7 +165,11 @@
 		    if(((controller.axes[1].toFixed(4) > .01) || (controller.axes[1].toFixed(4) < -.01)) && (((controller.axes[0].toFixed(4) > .01) || (controller.axes[0].toFixed(4) < -.01)))){
 					var angle = Math.atan2((-1*controller.axes[1].toFixed(4)),controller.axes[0].toFixed(4)) * (180/Math.PI);
 		      console.log("Angle: " + angle);
-					send_control_with_scale(angle, 100*Math.abs(controller.axes[3].toFixed(4)));
+					var scale = 100*Math.abs(controller.axes[3].toFixed(4));
+					if (scale < 25){
+						scale = 25;
+					}
+					send_control_with_scale(angle, scale);
 		    }
 
 		    if(controller.axes[3].toFixed(4) > .01){
