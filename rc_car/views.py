@@ -37,7 +37,7 @@ def by_uuid(request, unique_id):
 
     if (rc_car.Can_Watch(current_user)):
 
-        return rendner(request, template_name, {'rc': rc_car, 'is_owner': car_owner == current_user, 'can_control' : rc_car.Can_Control(current_user), 'can_view' : rc_car.Can_Watch(current_user)})
+        return render(request, template_name, {'rc': rc_car, 'is_owner': car_owner == current_user, 'can_control' : rc_car.Can_Control(current_user), 'can_view' : rc_car.Can_Watch(current_user)})
 
     else:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/dashboard'))
