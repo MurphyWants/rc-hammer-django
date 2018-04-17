@@ -26,7 +26,6 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
     'home.apps.HomeConfig',
     'rc_car.apps.RcCarConfig',
     'django.contrib.admin',
