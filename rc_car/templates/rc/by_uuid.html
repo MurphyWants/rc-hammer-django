@@ -1,5 +1,4 @@
 {% extends "base.html" %} {% block content %}
-<div class="col-4">
 	<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
 		<div class="card-header"> Car Information </div>
 		<div class="card-body">
@@ -24,7 +23,6 @@
 			<p class="card-text">  <a href="{{ request.path }}/edit/"> Edit this car </a> </p>
 			<p class="card-text">  <a href="{{ request.path }}/change_password/"> Change the car's password </a> </p>
 		</div>
-	</div>
 	{% endif %}
 </div>
 
