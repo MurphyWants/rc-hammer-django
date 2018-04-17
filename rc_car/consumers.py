@@ -37,11 +37,15 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
         current_user = rc_car.current_user
         user = self.scope["user"]
 
+        print(user)
+
         if(current_user == None):
             rc_car.current_user = user
             rc_car.save()
         else:
             await self.close()
+            """ Ensure that only one connection is open at a time so that random data isn't being thrown around """
+
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -136,9 +140,8 @@ class Data_Consumer(AsyncJsonWebsocketConsumer):
                     }
                 )
 
-                self.room_group_name = 'rc_car%s' % self.room_name
                 await self.channel_layer.group_add(
-                    self.room_group_name,
+                    'rc_car%s' % self.room_name,
                     self.channel_name
                 )
 
