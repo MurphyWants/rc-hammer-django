@@ -162,7 +162,7 @@
 		  scangamepads();
 		  for (j in controllers) {
 		    var controller = controllers[j];
-		    if(((controller.axes[1].toFixed(4) > .1) || (controller.axes[1].toFixed(4) < -.1)) && (((controller.axes[0].toFixed(4) > .1) || (controller.axes[0].toFixed(4) < -.1)))){
+		    if(((controller.axes[1].toFixed(4) > .1) || (controller.axes[1].toFixed(4) < -.1)) || (((controller.axes[0].toFixed(4) > .1) || (controller.axes[0].toFixed(4) < -.1)))){
 					var angle = Math.atan2((-1*controller.axes[1].toFixed(4)),controller.axes[0].toFixed(4)) * (180/Math.PI);
 		      console.log("Angle: " + angle);
 					var scale = 100*Math.abs(controller.axes[3].toFixed(4));
