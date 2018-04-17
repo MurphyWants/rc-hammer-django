@@ -57,7 +57,7 @@ class RC_Car(AbstractBaseUser):
     current_user = models.ForeignKey(User,
                             related_name="Current_User", blank=True, null=True, default=None, on_delete=models.SET_DEFAULT, editable=False)
     password = models.CharField(max_length=200, default="", null=False)
-
+    last_ping = models.DateTimeField(default=datetime.now)
     password_lockout = models.BooleanField(default=False, editable=False)
     password_attempts = models.IntegerField(default=0, editable=False)
 
