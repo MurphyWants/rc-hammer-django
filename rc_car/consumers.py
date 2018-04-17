@@ -79,18 +79,18 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
 
         if (user == current_user):
 
-            """if (datetime.now(timezone.utc) > (rc_car.last_consumer_ping - timedelta(milliseconds=49))):
+            if (datetime.now(timezone.utc) > (rc_car.last_consumer_ping - timedelta(milliseconds=49))):
                 rc_car.last_consumer_ping = datetime.now()
-                rc_car.save()"""
+                rc_car.save()
 
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'rc_drive_controls',
-                    'drive': drive_direction,
-                    'scale': scale,
-                }
-            )
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'rc_drive_controls',
+                        'drive': drive_direction,
+                        'scale': scale,
+                    }
+                )
 
     async def rc_drive_controls(self, event):
         drive_direction = event['drive']
