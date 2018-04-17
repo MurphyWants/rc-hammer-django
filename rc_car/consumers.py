@@ -1,6 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer, AsyncJsonWebsocketConsumer
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from .models import RC_Car
 
 '''
@@ -79,17 +79,18 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
 
         if (user == current_user):
 
-            rc_car.last_ping = datetime.now()
-            rc_car.save()
+            if (datime.now(tinezone.utc) > (rc_car.last_ping - timedelta(milliseconds=49))):
+                rc_car.last_ping = datetime.now()
+                rc_car.save()
 
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'rc_drive_controls',
-                    'drive': drive_direction,
-                    'scale': scale,
-                }
-            )
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'rc_drive_controls',
+                        'drive': drive_direction,
+                        'scale': scale,
+                    }
+                )
 
     async def rc_drive_controls(self, event):
         drive_direction = event['drive']
