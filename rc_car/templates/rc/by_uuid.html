@@ -1,15 +1,16 @@
 {% extends "base.html" %} {% block content %}
+<div class="col-9">
+	<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+		<div class="card-header"> Car Information </div>
+		<div class="card-body">
+			<h4 class="card-title"> {{ rc.name }} </h4>
+			<p class="card-text"> UUID: {{ rc.id }} </p>
+			<p class="card-text"> Created: {{ rc.date_added }} </p>
+			<p class="card-text"> Last Used: {{ rc.last_used }} </p>
+		</div>
+	</div>
 
-<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-  <div class="card-header">General Car Information </div>
-  <div class="card-body">
-    <h4 class="card-title"> {{ rc.name }} </h4>
-    <p class="card-text"> UUID: {{ rc.id }} </p>
-		<p class="card-text"> Created: {{ rc.date_added }} </p>
-		<p class="card-text"> Last Used: {{ rc.last_used }} </p>
-  </div>
 </div>
-
 <div class="Information">
 	<strong> Currently viewing: {{ rc.name }} </strong>
 	<ul>
@@ -117,7 +118,7 @@
 		function send_control(angle) {
 			var scale = document.querySelector('#rc_scale').value;
 			control_socket.send(JSON.stringify({
-				'type' : "controls",
+				'type': "controls",
 				'drive': angle,
 				'scale': scale,
 			}))
@@ -125,7 +126,7 @@
 
 		function send_control_with_scale(angle, scale) {
 			control_socket.send(JSON.stringify({
-				'type' : "controls",
+				'type': "controls",
 				'drive': angle,
 				'scale': scale,
 			}))
@@ -151,42 +152,43 @@
 		var haveEvents = 'GamepadEvent' in window;
 		var controllers = {};
 		var rAF = window.mozRequestAnimationFrame ||
-		  window.webkitRequestAnimationFrame ||
-		  window.requestAnimationFrame;
+			window.webkitRequestAnimationFrame ||
+			window.requestAnimationFrame;
 
 		function connecthandler(e) {
-		  addgamepad(e.gamepad);
+			addgamepad(e.gamepad);
 		}
+
 		function addgamepad(gamepad) {
 
-		  controllers[gamepad.index] = gamepad;
-		  rAF(updateStatus);
+			controllers[gamepad.index] = gamepad;
+			rAF(updateStatus);
 		}
 
 		function disconnecthandler(e) {
-		  removegamepad(e.gamepad);
+			removegamepad(e.gamepad);
 		}
 
 		function removegamepad(gamepad) {
-		  delete controllers[gamepad.index];
+			delete controllers[gamepad.index];
 		}
 
 		function updateStatus() {
-		  scangamepads();
-		  for (j in controllers) {
-		    var controller = controllers[j];
-		    if(((controller.axes[1].toFixed(4) > .1) || (controller.axes[1].toFixed(4) < -.1)) || (((controller.axes[0].toFixed(4) > .1) || (controller.axes[0].toFixed(4) < -.1)))){
-					var angle = Math.atan2((-1*controller.axes[1].toFixed(4)),controller.axes[0].toFixed(4)) * (180/Math.PI);
-		      console.log("Angle: " + angle);
-					var scale = 100*Math.abs(controller.axes[3].toFixed(4));
+			scangamepads();
+			for (j in controllers) {
+				var controller = controllers[j];
+				if (((controller.axes[1].toFixed(4) > .1) || (controller.axes[1].toFixed(4) < -.1)) || (((controller.axes[0].toFixed(4) > .1) || (controller.axes[0].toFixed(4) < -.1)))) {
+					var angle = Math.atan2((-1 * controller.axes[1].toFixed(4)), controller.axes[0].toFixed(4)) * (180 / Math.PI);
+					console.log("Angle: " + angle);
+					var scale = 100 * Math.abs(controller.axes[3].toFixed(4));
 					var input = document.getElementById("rc_scale").value;
-					if (scale < input){
+					if (scale < input) {
 						scale = input;
 					}
 					send_control_with_scale(angle, scale);
-		    }
+				}
 
-		    /*if(controller.axes[3].toFixed(4) > .01){
+				/*if(controller.axes[3].toFixed(4) > .01){
 					var input = document.getElementById("rc_scale");
 					var input_text = document.getElementById("rc_scale_text_box");
 
@@ -223,30 +225,29 @@
 		      console.log("Less: " + scale_value);
 		    }*/
 
-		  }
-		  rAF(updateStatus);
+			}
+			rAF(updateStatus);
 		}
 
 		function scangamepads() {
-		  var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);
-		  for (var i = 0; i < gamepads.length; i++) {
-		    if (gamepads[i]) {
-		      if (!(gamepads[i].index in controllers)) {
-		        addgamepad(gamepads[i]);
-		      } else {
-		        controllers[gamepads[i].index] = gamepads[i];
-		      }
-		    }
-		  }
+			var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads() : []);
+			for (var i = 0; i < gamepads.length; i++) {
+				if (gamepads[i]) {
+					if (!(gamepads[i].index in controllers)) {
+						addgamepad(gamepads[i]);
+					} else {
+						controllers[gamepads[i].index] = gamepads[i];
+					}
+				}
+			}
 		}
 
 		if (haveEvents) {
-		  window.addEventListener("gamepadconnected", connecthandler);
-		  window.addEventListener("gamepaddisconnected", disconnecthandler);
+			window.addEventListener("gamepadconnected", connecthandler);
+			window.addEventListener("gamepaddisconnected", disconnecthandler);
 		} else {
-		  setInterval(scangamepads, 10000);
+			setInterval(scangamepads, 10000);
 		}
-
 	</script>
 
 </div>
