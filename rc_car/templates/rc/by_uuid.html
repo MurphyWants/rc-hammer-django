@@ -157,7 +157,7 @@
 		    var controller = controllers[j];
 		    if(((controller.axes[1].toFixed(4) > .01) || (controller.axes[1].toFixed(4) < -.01)) && (((controller.axes[0].toFixed(4) > .01) || (controller.axes[0].toFixed(4) < -.01)))){
 					var angle = Math.atan2((-1*controller.axes[1].toFixed(4)),controller.axes[0].toFixed(4)) * (180/Math.PI);
-		      console.log("Angle: " + angle));
+		      console.log("Angle: " + angle);
 					send_control(angle);
 		    }
 
