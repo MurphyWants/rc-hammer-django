@@ -9,39 +9,26 @@
 			<p class="card-text"> Last Used: {{ rc.last_used }} </p>
 		</div>
 	</div>
-
-</div>
-<div class="Information">
-	<strong> Currently viewing: {{ rc.name }} </strong>
-	<ul>
-		<li> Date Added: {{ rc.date_added }} </li>
-		<li> Last Used: {{ rc.last_used }} </li>
-		<li> Car id: {{ rc.id }}</li>
-	</ul>
-
-	{% if car_owner %}
-
-	<p> You are the car owner </p>
-
-	<p> <a href="{{ request.path }}/edit/"> Edit this car </a>
-		<p>
-			<p> <a href="{{ request.path }}/change_password/"> Change the car's password </a>
-				<p>
-
-					{% endif %} {% if car_viewer %}
-
-					<p> This car was shared and you can watch </p>
-
-					{% endif %} {% if car_user %}
-
-					<p> This car was shared and you can drive </p>
-
-					{% endif %}
+	<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+		<div class="card-header"> Availible? </div>
+		<div class="card-body">
+			<h4 class="card-title"> Todo </h4>
+			<p class="card-text"> Will ping the websocket to say if this is being used or not </p>
+		</div>
+	</div>
+	{% if is_owner %}
+	<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+		<div class="card-header"> You are the owner </div>
+		<div class="card-body">
+			<h4 class="card-title"> Owner </h4>
+			<p class="card-text">  <a href="{{ request.path }}/edit/"> Edit this car </a> </p>
+			<p class="card-text">  <a href="{{ request.path }}/change_password/"> Change the car's password </a> </p>
+		</div>
+	</div>
+	{% endif %}
 </div>
 
-{% load static %}
-
-
+</div>
 
 <div class="RC_Controls">
 
