@@ -106,6 +106,7 @@
 		function send_control(angle) {
 			var scale = document.querySelector('#rc_scale').value;
 			control_socket.send(JSON.stringify({
+				'type' : "controls",
 				'drive': angle,
 				'scale': scale,
 			}))
@@ -113,6 +114,7 @@
 
 		function send_control_with_scale(angle, scale) {
 			control_socket.send(JSON.stringify({
+				'type' : "controls",
 				'drive': angle,
 				'scale': scale,
 			}))
