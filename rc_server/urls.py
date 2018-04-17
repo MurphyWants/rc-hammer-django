@@ -21,8 +21,6 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 
 urlpatterns = [
-    url(r'^chat/', include('chat.urls')),
-    path(r'polls/', include('polls.urls')),
     path(r'admin/', admin.site.urls),
     path(r'', include('home.urls')),
     path(r'dashboard/', include('rc_car.urls')),
