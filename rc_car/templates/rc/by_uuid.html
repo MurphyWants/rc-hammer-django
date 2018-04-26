@@ -69,36 +69,20 @@
 		};
 
 		document.querySelector('#rc_left').onclick = function(e) {
-			var scale = document.querySelector('#rc_scale').value;
-			control_socket.send(JSON.stringify({
-				'drive': '180',
-				'scale': scale,
-			}))
+			send_controls(270);
 		};
 
 		document.querySelector('#rc_right').onclick = function(e) {
-			var scale = document.querySelector('#rc_scale').value;
-			control_socket.send(JSON.stringify({
-				'drive': '0',
-				'scale': scale,
-			}))
+			send_controls(0);
 		};
 
 		document.querySelector('#rc_forward').onclick = function(e) {
-			var scale = document.querySelector('#rc_scale').value;
-			control_socket.send(JSON.stringify({
-				'drive': '90',
-				'scale': scale,
-			}))
+			send_controls(90);
 		};
 
 
 		document.querySelector('#rc_reverse').onclick = function(e) {
-			var scale = document.querySelector('#rc_scale').value;
-			control_socket.send(JSON.stringify({
-				'drive': '270',
-				'scale': scale,
-			}))
+			send_controls(270);
 		};
 
 		function toRadians(angle) {
