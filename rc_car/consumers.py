@@ -116,6 +116,7 @@ class Drive_Consumer(AsyncJsonWebsocketConsumer):
 
         await self.send_json(
         {
+            "type" : control,
             "drive": drive_direction,
             "scale": scale,
         },
