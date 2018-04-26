@@ -68,6 +68,15 @@
 			console.error('Error: socket closed');
 		};
 
+		function send_control(angle) {
+			var scale = document.querySelector('#rc_scale').value;
+			control_socket.send(JSON.stringify({
+				'type': "controls",
+				'drive': angle,
+				'scale': scale,
+			}))
+		};
+
 		document.querySelector('#rc_left').onclick = function(e) {
 			send_controls(270);
 		};
@@ -87,15 +96,6 @@
 
 		function toRadians(angle) {
 			return angle * (Math.PI / 180);
-		};
-
-		function send_control(angle) {
-			var scale = document.querySelector('#rc_scale').value;
-			control_socket.send(JSON.stringify({
-				'type': "controls",
-				'drive': angle,
-				'scale': scale,
-			}))
 		};
 
 		function send_control_with_scale(angle, scale) {
