@@ -20,9 +20,11 @@ def index(request):
     cars_owned = RC_Car.objects.filter(owner__id=current_user.id)
     cars_can_drive = RC_Car.objects.filter(user_list__id=current_user.id)
     cars_watch = RC_Car.objects.filter(viewer_list__id=current_user.id) | RC_Car.objects.filter(user_list__id=current_user.id)
+    public_cars = RC_Car.objects.filter(public_drive=True)
     return render(request, template_name, {'rc_car_owned_list' : cars_owned,
                                             'rc_car_shared_list': cars_watch,
-                                            'rc_car_can_drive_list' : cars_can_drive})
+                                            'rc_car_can_drive_list' : cars_can_drive,
+                                            'public_list': public_cars})
 
 @login_required(login_url="/login")
 def by_uuid(request, unique_id):

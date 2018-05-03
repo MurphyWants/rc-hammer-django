@@ -34,4 +34,21 @@
 	<p> Nobody has shared any cars! </p>
 {% endif %}
 
+{% if public_list %}
+
+<p> The following cars are publically shared </p>
+
+{% for rc in public_list %}
+
+<strong> <a href="/dashboard/rc/{{ rc.id }}"> {{ rc.name }} </a> </strong>
+	<ul>
+		<li> Date Added: {{ rc.date_added }}  </li>
+    <li> Last Used: {{ rc.last_used }} </li>
+    <li> Car id: {{ rc.id }}</li>
+	</ul>
+
+{% endfor %}
+
+{% endif %}
+
 {% endblock %}

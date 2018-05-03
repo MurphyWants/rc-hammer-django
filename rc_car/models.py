@@ -63,12 +63,16 @@ class RC_Car(AbstractBaseUser):
         return self.name
 
     def Can_Control(self, input_user):
+        if (self.public_drive == True):
+            return True
         if (input_user == self.owner) or (input_user in self.user_list.all()):
             return True
         else:
             return False
 
     def Can_Watch(self,input_user):
+        if (self.public_watch == True):
+            return True
         if (self.Can_Control(input_user)) or (input_user in self.viewer_list.all()):
             return True
         else:
