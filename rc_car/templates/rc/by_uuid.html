@@ -47,14 +47,20 @@
 
 	</br>
 
-	<input id="rc_left" type="button" value="Left" />
-	<input id="rc_forward" type="button" value="Forward" />
-	<input id="rc_reverse" type="button" value="Reverse" />
-	<input id="rc_right" type="button" value="Right" />
+	<input id="rc_left" type="button" value="Left" onmousedown ="rc_left = true" onmouseup="rc_left = false" />
+	<input id="rc_forward" type="button" value="Forward" onmousedown ="rc_forward = true" onmouseup="rc_forward = false" />
+	<input id="rc_reverse" type="button" value="Reverse" onmousedown ="rc_reverse = true" onmouseup="rc_reverse = false"/>
+	<input id="rc_right" type="button" value="Right" onmousedown ="rc_right = true" onmouseup="rc_right = false"/>
 
 	</br>
 
 	<script>
+
+		var rc_left = false;
+		var rc_forward = false;
+		var rc_reverse = false;
+		var rc_right = false;
+
 		var roomName = "{{ rc.id }}";
 
 		var control_socket = new WebSocket(
@@ -70,6 +76,7 @@
 
 		function send_control(angle) {
 			var scale = document.querySelector('#rc_scale').value;
+			console.log("Sending packet (scale,angle): " + scale + ", " + angle);
 			control_socket.send(JSON.stringify({
 				'type': "controls",
 				'drive': angle,
@@ -77,7 +84,7 @@
 			}))
 		};
 
-		document.querySelector('#rc_left').onclick = function(e) {
+		/*document.querySelector('#rc_left').onclick = function(e) {
 			send_control(270);
 		};
 
@@ -92,13 +99,28 @@
 
 		document.querySelector('#rc_reverse').onclick = function(e) {
 			send_control(270);
-		};
+		};*/
+
+		function on_screen_buttons(){
+			if (rc_forward){
+				send_control(90);
+			} else if (rc_left){
+				send_control(180);
+			} else if (rc_right){
+				send_control(0);
+			} else if (rc_reverse){
+				send_control(270)
+			}
+		}
+
+		setInterval(on_screen_buttons, 250)
 
 		function toRadians(angle) {
 			return angle * (Math.PI / 180);
 		};
 
 		function send_control_with_scale(angle, scale) {
+			console.log("Sending packet (scale,angle): " + scale + ", " + angle);
 			control_socket.send(JSON.stringify({
 				'type': "controls",
 				'drive': angle,
@@ -161,44 +183,6 @@
 					}
 					send_control_with_scale(angle, scale);
 				}
-
-				/*if(controller.axes[3].toFixed(4) > .01){
-					var input = document.getElementById("rc_scale");
-					var input_text = document.getElementById("rc_scale_text_box");
-
-					var scale_value = input.value;
-
-					scale_value = scale_value + .1;
-
-					if (scale_value > 100){
-						scale_value = 100;
-					}
-
-					document.getElementById("rc_scale").value = scale_value;
-					document.getElementById("rc_scale_text_box").value = scale_value;
-
-		      console.log("More: " + scale_value);
-		    }
-
-		    if(controller.axes[3].toFixed(4) < -.01){
-
-					var input = document.getElementById("rc_scale");
-					var input_text = document.getElementById("rc_scale_text_box");
-
-					var scale_value = input.value;
-
-					scale_value = scale_value - .1;
-
-					if (scale_value < 0){
-						scale_value = 0;
-					}
-
-					input.innerHTML = scale_value;
-					input_text.innerHTML = scale_value;
-
-		      console.log("Less: " + scale_value);
-		    }*/
-
 			}
 			rAF(updateStatus);
 		}
