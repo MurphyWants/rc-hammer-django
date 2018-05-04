@@ -26,8 +26,9 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'home.apps.HomeConfig',
     'rc_car.apps.RcCarConfig',
+    #'rc_car.apps.NullConfig',
+    'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
